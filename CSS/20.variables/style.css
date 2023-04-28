@@ -1,0 +1,31 @@
+:root {
+  --color-background: rgb(49, 49, 49);
+  --color-primary: rgb(248, 120, 8);
+  --color-secondary: blue;
+  --font-size-xl: 1.5rem;
+  --font-family-primary: "Roboto", sans-serif;
+  --border: 2px solid black;
+}
+
+body {
+  background-color: var(--color-background);
+}
+
+h1 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+}
+
+p {
+  color: var(--color-secondary);
+}
+
+h3 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+}

@@ -1,0 +1,78 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: cadetblue;
+  height: 10vh;
+}
+
+main {
+  min-height: 150vh;
+  background-color: wheat;
+}
+
+.relative {
+  width: 100px;
+  height: 100px;
+  background-color: crimson;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.absolute {
+  width: 100px;
+  height: 100px;
+  background-color: green;
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+.fixed {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  position: fixed;
+  top: 0;
+  left: 200px;
+}
+
+header {
+  position: sticky;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  background-color: yellow;
+  position: relative;
+  top: 300px;
+  left: 20px;
+  border-radius: 50%;
+}
+
+.spinner::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  border-radius: 50%;
+}
+
+.spinner::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  border-radius: 50%;
+}

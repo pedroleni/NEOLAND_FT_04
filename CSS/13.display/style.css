@@ -1,0 +1,16 @@
+img {
+  width: 200px;
+  border: 2px solid black;
+}
+
+div {
+  display: inline;
+}
+
+li {
+  display: inline;
+}
+
+p {
+  display: none;
+}

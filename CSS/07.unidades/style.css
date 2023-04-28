@@ -1,0 +1,39 @@
+/*UNIDADES DE MEDIDA ABSOLUTAS*/
+h1 {
+  font-size: 20px;
+}
+
+/*UNIDADES DE MEDIDA RELATIVAS*/
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+.box > div {
+  background-color: green;
+  height: 50%;
+  width: 50%;
+}
+
+:root {
+  font-size: 16px;
+}
+
+.embox {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+h3 {
+  font-size: 1em;
+}
+
+footer {
+  height: 10vh;
+  width: 50vw;
+  background-color: aquamarine;
+}

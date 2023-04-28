@@ -1,0 +1,19 @@
+/* COMBINADOR DE HERMANOS ADYACENTES */
+.adyacente:first-of-type + .adyacente {
+  color: red;
+}
+
+/* COMBINADOR GENERAL DE HERMANOS ADYACENTES */
+h4:first-of-type ~ h4 {
+  color: orange;
+}
+
+/* COMBINADOR DE HIJOS */
+.alumnos > li {
+  color: crimson;
+}
+
+/* COMBINADOR DE DESCENDIENTES */
+.book figcaption {
+  color: orange;
+}

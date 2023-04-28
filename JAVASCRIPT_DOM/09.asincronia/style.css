@@ -1,0 +1,10 @@
+figure {
+  padding: 2rem;
+  border: 2px solid rgb(0, 0, 0);
+}
+
+#app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

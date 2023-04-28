@@ -1,0 +1,17 @@
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: crimson;
+}
+
+h1 {
+  color: rgba(0, 0, 0, 0.515);
+}
+
+p {
+  color: #dc143c;
+}
+
+h3 {
+  color: hsl(108, 100%, 50%);
+}

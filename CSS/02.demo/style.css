@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #2a333e;
+  color: #f9fefb;
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #fc3b10;
+}
+
+header {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+header > ul {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.5s ease-in-out;
+}
+
+a:hover {
+  color: #fc3b10;
+}
+
+main {
+  min-height: 80vh;
+}
+
+article {
+  padding: 0 20px;
+}
+
+.intro > p {
+  text-align: justify;
+}
+
+.gallery {
+  animation: fadeIn 5.5s;
+}
+
+.gallery > ul {
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.gallery img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  padding: 5px;
+  border-radius: 20px;
+  transition: all 0.5s ease-in-out;
+}
+
+.gallery img:hover {
+  background-color: #fc3b10;
+  transform: scale(1.05) rotate(2deg);
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

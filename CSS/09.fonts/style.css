@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "Formula";
+  font-weight: 300;
+  src: url(./assets/fonts/Formula1-Regular.otf);
+}
+
+@font-face {
+  font-family: "Formula";
+  font-family: 800;
+  src: url(./assets/fonts/Formula1-Bold.otf);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-size: 1rem;
+  font-weight: 900;
+  font-style: italic;
+}
+
+p {
+  letter-spacing: 10px;
+  font-family: "Formula";
+  font-weight: 900;
+}
+
+p:hover {
+  font-family: "Roboto";
+}

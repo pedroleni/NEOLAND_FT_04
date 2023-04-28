@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Datos Personales:</legend>
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          id="username"
+          placeholder="Peter"
+          maxlength="10"
+          minlength="3"
+          required
+          value="Hola"
+        />
+        <input type="password" />
+        <textarea>Escribe tu descripción</textarea>
+        <input type="number" min="10" max="20" />
+        <input type="range" min="0" max="100" step="25" />
+        <input type="date" min="2023-04-03" max="2023-04-17" />
+        <input type="week" />
+        <input type="checkbox" value="OK" />
+        <input type="radio" />
+      </fieldset>
+      <fieldset>
+        <legend>Botones</legend>
+        <select multiple>
+          <option value="">-</option>
+          <optgroup label="Superheroes">
+            <option value="batman">Batman</option>
+            <option value="spiderman">Spiderman</option>
+            <option value="deadpool">Deadpool</option>
+          </optgroup>
+          <optgroup label="Cine contemporaneo">
+            <option value="padrino">El Padrino</option>
+            <option value="titanic">Titanic</option>
+            <option value="casablanca">Casablanca</option>
+          </optgroup>
+        </select>
+        <button type="submit">Click</button>
+        <input type="submit" value="Click" />
+        <input type="reset" value="Reset" />
+      </fieldset>
+    </form>
+    <form>
+      <input type="text" list="items" />
+      <datalist id="items">
+        <option value="ordenador">Ordenador</option>
+        <option value="plancha">Plancha</option>
+        <option value="sandwichera">Sandwichera</option>
+      </datalist>
+
+      <input type="color" value="#FFFFFF" />
+      <input type="file" />
+
+      <!--  <meter min="0" max="100" low="20" optimum="50" high="100" value="18" /> -->
+      <progress min="0" max="100" value="50" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+/* SELECTORES DE ETIQUETA */
+body {
+  background-color: rgb(249, 174, 147);
+}
+
+p {
+  color: whitesmoke;
+}
+
+/* SELECTORES DE CLASE */
+.endparagraph {
+  color: cadetblue;
+}
+
+/* SELECTORES POR ID */
+#tardesparagraph {
+  color: cornflowerblue;
+}
+
+/* SELECTOR UNIVERSAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* SELECTOR POR ATRIBUTO */
+a[href="www.google.com"] {
+  color: crimson;
+}
+
+a[href="www.twitter.com"] {
+  color: lightskyblue;
+}
+
+a[href="www.instagram.com"] {
+  color: plum;
+}

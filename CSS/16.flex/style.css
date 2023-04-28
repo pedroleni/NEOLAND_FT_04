@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.box {
+  height: 100px;
+  width: 100px;
+  background-color: crimson;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box:nth-child(3) {
+  flex-grow: 2;
+  align-self: flex-start;
+}
+main {
+  display: flex;
+  background-color: rgb(1, 1, 131);
+  min-height: 400px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}

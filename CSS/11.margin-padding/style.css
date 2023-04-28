@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: cadetblue;
+  width: 400px;
+  height: 40px;
+  margin: auto;
+  padding: 10px 100px;
+  text-align: center;
+}
+
+img {
+  width: 300px;
+  margin: auto;
+  display: block;
+  padding: 10px;
+  background-color: cadetblue;
+}

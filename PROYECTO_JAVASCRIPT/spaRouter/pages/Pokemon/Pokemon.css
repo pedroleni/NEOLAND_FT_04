@@ -1,0 +1,17 @@
+.figurePokemon{
+    width: 200px;
+    display:flex;
+   flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.galleryPokemon{
+    display:flex;
+   flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}

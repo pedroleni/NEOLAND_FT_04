@@ -1,0 +1,19 @@
+{
+  "peliculas": [
+    {
+      "title": "Titanic",
+      "year": 1996,
+      "director": "James Cameron"
+    },
+    {
+      "title": "Dune",
+      "year": 2021,
+      "director": "Denis Villeneuve"
+    }
+  ],
+  "series": [
+    {
+      "title": "Breaking Bad"
+    }
+  ]
+}
