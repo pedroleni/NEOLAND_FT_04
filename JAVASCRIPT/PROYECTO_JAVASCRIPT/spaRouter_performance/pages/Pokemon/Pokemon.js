@@ -18,10 +18,10 @@ const template = () =>
 //! ----------------------------------------------------------------
 
 //TODO en el data service llamamos al servicio y creamos las figure que luego se pintaran
-const dataService = async () => {
+const dataService = async (data) => {
   //llamamos al servicio para traer la DATA y le metemos la info a la variable global dataServicePokemon
-  const getData = await dataPokemon();
-  dataServicePokemon = getData;
+
+  dataServicePokemon = data;
   createAndPrintFigure(dataServicePokemon);
 };
 
@@ -65,8 +65,8 @@ const filterPokemon = (valueInput) => {
 //! ----------------------------------------------------------------
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
-export const printTemplate = () => {
+export const printTemplate = (data) => {
   document.querySelector("main").innerHTML = template();
-  dataService();
+  dataService(data);
   addListeners();
 };
