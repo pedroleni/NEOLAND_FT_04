@@ -1,7 +1,4 @@
-import { getPokemon } from "./services/pokemon.service";
 import "./style.css";
-import { dataPokemon } from "./utils/dataPokemon";
-
 // ----> Primero inyectamos el template con el header, main y el footer
 import { initTemplate } from "./utils/initTemplate";
 

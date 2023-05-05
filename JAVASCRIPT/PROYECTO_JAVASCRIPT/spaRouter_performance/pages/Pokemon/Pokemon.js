@@ -1,4 +1,3 @@
-import { dataPokemon } from "../../utils/dataPokemon";
 import "./Pokemon.css";
 
 //! ----------------------------------------------------------------
@@ -7,10 +6,15 @@ import "./Pokemon.css";
 
 // TODO Creamos una variable local para que tengan acceso todas las funciones con los datos del service
 let dataServicePokemon;
+let typeGlobal;
 const template = () =>
   ` <div id="pokemon">
-      <input type="text" id="inputPokemon" />
-      <div class="galleryPokemon"></div>
+    <div id="containerFilter">
+      <div id="filterButton"></div>
+      <input type="text" id="inputPokemon" placeholder="Busca tu pokemon favorito"/>
+    </div>
+
+    <div class="galleryPokemon"></div>
   </div>`;
 
 //! ----------------------------------------------------------------
@@ -31,9 +35,10 @@ const createAndPrintFigure = (data) => {
   document.querySelector(".galleryPokemon").innerHTML = "";
   // mapeamos la data para crear un figure de cada elemento que mandaremos a inyectar a la galeria
   data.map((pokemon) => {
+    const classCustomType = `"figurePokemon ${pokemon.type[0].type.name}"`;
     const templateFigure = `
-      <figure class="figurePokemon">
-        <img src=${pokemon.image} alt=${pokemon.name} />
+      <figure class=${classCustomType}>
+        <img src=${pokemon.image} alt=${pokemon.name} class="imgPokemon"/>
         <h2>${pokemon.name}</h2>
       </figure>
     `;
@@ -47,17 +52,58 @@ const addListeners = () => {
   /// EVENTO TO INPUT
   const inputPokemon = document.getElementById("inputPokemon");
   inputPokemon.addEventListener("input", (e) => {
-    filterPokemon(e.target.value);
+    filterPokemon(e.target.value, "name");
+  });
+
+  /// ------Meter los eventos de los botones
+
+  typeGlobal.forEach((type) => {
+    const buttonType = document.querySelector(`.${type}`);
+
+    buttonType.addEventListener("click", (e) => {
+      console.log(type);
+      filterPokemon(type, "type");
+    });
   });
 };
 
 // Creamos la funcion que se encarga de filtrar los pokemon
-const filterPokemon = (valueInput) => {
-  const filterData = dataServicePokemon.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(valueInput.toLowerCase())
-  );
+const filterPokemon = (filtro, donde) => {
+  /// (grass, type)
 
-  createAndPrintFigure(filterData);
+  switch (donde) {
+    case "name":
+      {
+        console.log(dataServicePokemon);
+        const filterData = dataServicePokemon.filter((pokemon) =>
+          pokemon.name.toLowerCase().includes(filtro.toLowerCase())
+        );
+        createAndPrintFigure(filterData);
+      }
+      break;
+    case "type": {
+      console.log(dataServicePokemon);
+
+      const filterData = dataServicePokemon.filter((pokemon) =>
+        pokemon.type[0].type.name.toLowerCase().includes(filtro.toLowerCase())
+      );
+
+      break;
+    }
+  }
+};
+
+//! ----------------------------------------------------------------
+//?--------------- PINTAR LOS BOTONES DE LOS TYPES------------------
+//! ----------------------------------------------------------------
+
+const printButtons = (types) => {
+  types.forEach((type) => {
+    const idCustom = `button${type[0].toUpperCase() + type.slice(1)}`;
+    const buttonType = `<button class="buttonFilter ${type}" id=>${idCustom}</button>`;
+    const filterButton = document.getElementById("filterButton");
+    filterButton.innerHTML += buttonType;
+  });
 };
 
 //! ----------------------------------------------------------------
@@ -66,7 +112,11 @@ const filterPokemon = (valueInput) => {
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
 export const printTemplate = (data) => {
+  const { type, dataPokemon } = data;
+  typeGlobal = type;
+  dataServicePokemon = dataPokemon;
   document.querySelector("main").innerHTML = template();
-  dataService(data);
+  dataService(dataPokemon);
+  printButtons(type);
   addListeners();
 };

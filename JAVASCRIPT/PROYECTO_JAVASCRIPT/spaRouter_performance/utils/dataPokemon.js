@@ -1,4 +1,5 @@
 import { getPokemon } from "../services/pokemon.service";
+import { typePokemon } from "./typePokemon";
 
 export const dataPokemon = async () => {
   const data = [];
@@ -13,6 +14,13 @@ const dataMap = (data) => {
   const filterData = data.map((pokemon) => ({
     name: pokemon.name,
     image: pokemon.sprites.other.dream_world.front_default,
+    type: pokemon.types,
   }));
-  return filterData;
+
+  const type = typePokemon(filterData);
+
+  return {
+    type: type,
+    dataPokemon: filterData,
+  };
 };
