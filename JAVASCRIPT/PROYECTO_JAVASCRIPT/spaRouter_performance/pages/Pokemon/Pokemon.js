@@ -25,13 +25,17 @@ const template = () =>
 const dataService = async (data) => {
   //llamamos al servicio para traer la DATA y le metemos la info a la variable global dataServicePokemon
 
+  /// le ponemos el valor a la variable global para poder utilizarlo en otras funciones
   dataServicePokemon = data;
+
+  /// nos llamamos a pintar las figuras porque esta funcion es de las primeras que se ejecutan
   createAndPrintFigure(dataServicePokemon);
 };
 
 //! -------> FUNCION GENERAL QUE NOS VA A SERVIR PARA PINTAR TANTO LOS POKEMON DEL FILTER COMO LOS DE LA DATA GENERAL
 
 const createAndPrintFigure = (data) => {
+  //borramos primero la galleria por si hubiera algun elemento pintado de antes
   document.querySelector(".galleryPokemon").innerHTML = "";
   // mapeamos la data para crear un figure de cada elemento que mandaremos a inyectar a la galeria
   data.map((pokemon) => {
@@ -47,6 +51,9 @@ const createAndPrintFigure = (data) => {
   });
 };
 
+//! ----------------------------------------------------------------
+//?--------------- EVENTOS DE LOS ELEMENTOS HTML -------------------
+//! ----------------------------------------------------------------
 //TODO --> Añadimos los escuchadores de eventos
 const addListeners = () => {
   /// EVENTO TO INPUT
@@ -61,20 +68,23 @@ const addListeners = () => {
     const buttonType = document.querySelector(`.${type}`);
 
     buttonType.addEventListener("click", (e) => {
-      console.log(type);
       filterPokemon(type, "type");
     });
   });
 };
 
+//! ----------------------------------------------------------------
+//?--------------- FUNCIONES DE FILTRADO DE LA DATA ----------------
+//! ----------------------------------------------------------------
 // Creamos la funcion que se encarga de filtrar los pokemon
 const filterPokemon = (filtro, donde) => {
   /// (grass, type)
 
+  // vamos a hacer un switch para gestionar las diferentes formar de hacer el filtro dependiendo de donde viene
+  // puede venir de hacer el filtro de nama por el input o los botones por type
   switch (donde) {
     case "name":
       {
-        console.log(dataServicePokemon);
         const filterData = dataServicePokemon.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(filtro.toLowerCase())
         );
@@ -82,11 +92,20 @@ const filterPokemon = (filtro, donde) => {
       }
       break;
     case "type": {
-      console.log(dataServicePokemon);
-
       const filterData = dataServicePokemon.filter((pokemon) =>
         pokemon.type[0].type.name.toLowerCase().includes(filtro.toLowerCase())
       );
+
+      if (filterData.length === 0) {
+        const filterData = dataServicePokemon.filter((pokemon) =>
+          pokemon.type[1]?.type.name
+            .toLowerCase()
+            .includes(filtro.toLowerCase())
+        );
+        createAndPrintFigure(filterData);
+      } else {
+        createAndPrintFigure(filterData);
+      }
 
       break;
     }
@@ -100,7 +119,7 @@ const filterPokemon = (filtro, donde) => {
 const printButtons = (types) => {
   types.forEach((type) => {
     const idCustom = `button${type[0].toUpperCase() + type.slice(1)}`;
-    const buttonType = `<button class="buttonFilter ${type}" id=>${idCustom}</button>`;
+    const buttonType = `<button class="buttonFilter ${type}" id=>${type}</button>`;
     const filterButton = document.getElementById("filterButton");
     filterButton.innerHTML += buttonType;
   });

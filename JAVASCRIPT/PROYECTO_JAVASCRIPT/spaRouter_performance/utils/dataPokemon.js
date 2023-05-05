@@ -16,7 +16,7 @@ const dataMap = (data) => {
     image: pokemon.sprites.other.dream_world.front_default,
     type: pokemon.types,
   }));
-
+  /// Nos llamamos a la funcion que nos trae el array con los type
   const type = typePokemon(filterData);
 
   return {
