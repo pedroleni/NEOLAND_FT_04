@@ -17,13 +17,13 @@ const template = () => `
       </li>
 
       <li>
-        <figure id="figureManga" class="figureDashboard">
+        <figure id="figureWacka" class="figureDashboard">
           <img
-            src="https://res.cloudinary.com/dq186ej4c/image/upload/v1682675698/generos-de-manga-y-su-significado-1-1024x681_px62c6.jpg"
-            alt="navigate to page manga"
-            id="imgManga"
+            src="https://res.cloudinary.com/dh9z8mk2j/image/upload/v1683567229/Bootcamp/B.Abril2023/wakatopo_uree9x.jpg"
+            alt="navigate to page Wacka"
+            id="imgWacka"
           />
-          <h2>Manga</h2>
+          <h2>Wacka</h2>
         </figure>
       </li>
       <li>
@@ -47,9 +47,9 @@ const addListeners = () => {
   imgPokemon.addEventListener("click", () => {
     initControler("Pokemon");
   });
-  const imgManga = document.getElementById("imgManga");
+  const imgManga = document.getElementById("imgWacka");
   imgManga.addEventListener("click", () => {
-    initControler("Manga");
+    initControler("Wacka");
   });
   const imgAnime = document.getElementById("imgAnime");
   imgAnime.addEventListener("click", () => {
