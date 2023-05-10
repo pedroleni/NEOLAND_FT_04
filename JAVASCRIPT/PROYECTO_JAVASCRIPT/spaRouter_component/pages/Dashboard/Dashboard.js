@@ -27,13 +27,13 @@ const template = () => `
         </figure>
       </li>
       <li>
-        <figure id="figureAnime" class="figureDashboard">
+        <figure id="figureMemory" class="figureDashboard">
           <img
-            src="https://res.cloudinary.com/dq186ej4c/image/upload/v1682675855/animes_bqalo4.webp"
-            alt="navigate to anime page"
-            id="imgAnime"
+            src="https://i.etsystatic.com/27759810/r/il/f178f4/3661501502/il_1588xN.3661501502_3dzo.jpg"
+            alt="navigate to memory page"
+            id="imgMemory"
           />
-          <h2>Anime</h2>
+          <h2>Memory game</h2>
         </figure>
       </li>
     </ul>
@@ -51,9 +51,9 @@ const addListeners = () => {
   imgManga.addEventListener("click", () => {
     initControler("Wacka");
   });
-  const imgAnime = document.getElementById("imgAnime");
+  const imgAnime = document.getElementById("imgMemory");
   imgAnime.addEventListener("click", () => {
-    initControler("Anime");
+    initControler("Memory");
   });
 };
 

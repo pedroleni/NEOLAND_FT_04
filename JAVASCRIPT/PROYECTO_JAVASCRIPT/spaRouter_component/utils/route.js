@@ -1,7 +1,7 @@
 import { printTemplate as Pokemon } from "../pages/Pokemon/Pokemon";
 import { printTemplate as Login } from "../pages/Login/Login";
 import { printTemplate as Wacka } from "../pages/Wacka/Wacka";
-import { printTemplate as Anime } from "../pages/Anime/Anime";
+import { printTemplate as Memory } from "../pages/Memory/Memory";
 import { printTemplate as Dashboard } from "../pages/Dashboard/Dashboard";
 
 //! --------------------------------------------------------------------------------------------------
@@ -20,8 +20,8 @@ export const initControler = (route) => {
     case "Wacka":
       Wacka();
       break;
-    case "Anime":
-      Anime();
+    case "Memory":
+      Memory();
       break;
     case "Login":
       Login();
