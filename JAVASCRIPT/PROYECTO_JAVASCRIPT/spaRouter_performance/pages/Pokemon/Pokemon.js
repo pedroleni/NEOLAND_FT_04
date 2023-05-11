@@ -129,7 +129,7 @@ const printButtons = (types) => {
 
 //! ----------------------------------------------------------------
 //?--------------- PINTAR EL CONTENEDOR GENERAL---------------------
-//! ----------------------------------------------------------------
+//! -----------------------------------------------------------------
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
 export const printTemplate = (data) => {
