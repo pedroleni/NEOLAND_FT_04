@@ -1,0 +1,16 @@
+.figurePokemon {
+  width: 200px;
+  height: 280px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+.imgPokemon {
+  height: 200px;
+  animation: rebota 1s alternate infinite ease-in;
+  transition: all 1s ease-in-out;
+}

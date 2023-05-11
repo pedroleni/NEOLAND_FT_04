@@ -48,9 +48,6 @@ const addListeners = () => {
   const imgPokemon = document.getElementById("imgPokemon");
   imgPokemon.addEventListener("click", () => {
     initControler("Pokemon");
-    setTimeout(() => {
-      refrestDataApp();
-    }, 5000);
   });
   const imgManga = document.getElementById("imgManga");
   imgManga.addEventListener("click", () => {
@@ -60,6 +57,8 @@ const addListeners = () => {
   imgAnime.addEventListener("click", () => {
     initControler("Anime");
   });
+
+  refrestDataApp();
 };
 
 // ----> 3) Pintar
