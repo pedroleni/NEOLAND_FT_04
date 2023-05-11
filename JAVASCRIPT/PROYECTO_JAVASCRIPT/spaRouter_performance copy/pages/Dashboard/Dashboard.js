@@ -48,7 +48,9 @@ const addListeners = () => {
   const imgPokemon = document.getElementById("imgPokemon");
   imgPokemon.addEventListener("click", () => {
     initControler("Pokemon");
-    refrestDataApp();
+    setTimeout(() => {
+      refrestDataApp();
+    }, 5000);
   });
   const imgManga = document.getElementById("imgManga");
   imgManga.addEventListener("click", () => {
