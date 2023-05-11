@@ -12,7 +12,7 @@ export const initControler = async (route) => {
       localStorage.getItem("user") ? Dashboard() : Login();
       break;
     case "Pokemon":
-      Pokemon(await dataApp());
+      Pokemon();
       break;
     case "Manga":
       Manga();

@@ -1,3 +1,5 @@
+import { getDataGlobal } from "../../data/data";
+import { dataApp } from "../../utils/dataGlobal";
 import "./Pokemon.css";
 
 //! ----------------------------------------------------------------
@@ -131,7 +133,7 @@ const printButtons = (types) => {
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
 export const printTemplate = (data) => {
-  const { pokemonData } = data;
+  const { pokemonData } = getDataGlobal();
   const { dataPokemon, type } = pokemonData;
   typeGlobal = type;
   dataServicePokemon = dataPokemon;
@@ -139,4 +141,5 @@ export const printTemplate = (data) => {
   dataService(dataPokemon);
   printButtons(type);
   addListeners();
+  dataApp();
 };

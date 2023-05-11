@@ -1,4 +1,5 @@
 import "./style.css";
+import { dataApp } from "./utils/dataGlobal";
 // ----> Primero inyectamos el template con el header, main y el footer
 import { initTemplate } from "./utils/initTemplate";
 
@@ -8,3 +9,4 @@ initTemplate();
 
 ///-----> inicializo el controlador de las paginas en el caso undefined
 initControler();
+dataApp();
