@@ -6,15 +6,13 @@ import { printTemplate as Dashboard } from "../pages/Dashboard/Dashboard";
 import { dataApp } from "./dataGlobal";
 
 export const initControler = async (route) => {
-  const { pokemonData } = await dataApp();
-
   switch (route) {
     // ---> caso 1: el que gestiona que el usuario este authenticado
     case undefined:
       localStorage.getItem("user") ? Dashboard() : Login();
       break;
     case "Pokemon":
-      Pokemon(pokemonData);
+      Pokemon(await dataApp());
       break;
     case "Manga":
       Manga();

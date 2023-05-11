@@ -131,7 +131,8 @@ const printButtons = (types) => {
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
 export const printTemplate = (data) => {
-  const { type, dataPokemon } = data;
+  const { pokemonData } = data;
+  const { dataPokemon, type } = pokemonData;
   typeGlobal = type;
   dataServicePokemon = dataPokemon;
   document.querySelector("main").innerHTML = template();
