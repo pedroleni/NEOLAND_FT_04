@@ -16,7 +16,7 @@ const addListeners = () => {
     const inputLogin = document.querySelector("input");
     localStorage.setItem("user", inputLogin.value);
     if (localStorage.getItem("user"))
-      document.querySelector("nav").style.display = "block";
+      document.querySelector("nav").style.display = "flex";
     initControler();
   });
 };
