@@ -1,6 +1,7 @@
 import { printButtons } from "../../components/ButtonPokemon/ButtonPokemon";
 import { createAndPrintFigure } from "../../components/CardPokemon/CardPokemon";
 import { getDataGlobal } from "../../data/data";
+import { filterPokemon } from "../../utils/dataPokemon";
 import { paginacion } from "../../utils/paginacion";
 import "./Pokemon.css";
 
@@ -15,9 +16,14 @@ const template = () =>
   ` <div id="pokemon">
     <div id="containerFilter">
       <div id="filterButton"></div>
+      <div class="pagContainer">
+      <h4>150 POKEMONS</h4>
+      <div id="paginacion"></div>
+      </div>
       <input type="text" id="inputPokemon" placeholder="Busca tu pokemon favorito"/>
+      
     </div>
-    <div id="paginacion"></div>
+    
 
     <div class="galleryPokemon"></div>
   </div>`;
@@ -28,11 +34,6 @@ const template = () =>
 
 //TODO en el data service llamamos al servicio y creamos las figure que luego se pintaran
 const dataService = async (data, type) => {
-  //llamamos al servicio para traer la DATA y le metemos la info a la variable global dataServicePokemon
-
-  /// le ponemos el valor a la variable global para poder utilizarlo en otras funciones
-
-  /// nos llamamos a pintar las figuras porque esta funcion es de las primeras que se ejecutan
   createAndPrintFigure(data.slice(0, 25));
   printButtons(type);
   paginacion(data, 25);
@@ -46,7 +47,17 @@ const addListeners = () => {
   /// EVENTO TO INPUT
   const inputPokemon = document.getElementById("inputPokemon");
   inputPokemon.addEventListener("input", (e) => {
-    filterPokemon(e.target.value, "name");
+    const allButton = document.querySelectorAll(".buttonPaginacion");
+
+    allButton.forEach((element) => {
+      element.style.border = "solid 1px #00000046";
+    });
+    if (e.target.value === "") {
+      createAndPrintFigure(dataServicePokemon.slice(0, 25));
+      allButton[0].style.border = "solid 2px #0000ff6a";
+    } else {
+      filterPokemon(e.target.value, "name");
+    }
   });
 };
 

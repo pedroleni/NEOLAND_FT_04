@@ -28,6 +28,11 @@ const addListeners = (types) => {
     const buttonType = document.querySelector(`.${type}`);
 
     buttonType.addEventListener("click", (e) => {
+      const allButton = document.querySelectorAll(".buttonPaginacion");
+
+      allButton.forEach((element) => {
+        element.style.border = "solid 1px #00000046";
+      });
       filterPokemon(type, "type");
     });
   });
