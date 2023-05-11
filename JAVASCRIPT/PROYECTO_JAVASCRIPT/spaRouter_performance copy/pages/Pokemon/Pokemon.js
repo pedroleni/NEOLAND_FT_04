@@ -31,7 +31,7 @@ const dataService = async (data, type) => {
   //llamamos al servicio para traer la DATA y le metemos la info a la variable global dataServicePokemon
 
   /// le ponemos el valor a la variable global para poder utilizarlo en otras funciones
-  dataServicePokemon = data.slice(0, 30);
+  dataServicePokemon = data.slice(0, 22);
 
   /// nos llamamos a pintar las figuras porque esta funcion es de las primeras que se ejecutan
   createAndPrintFigure(dataServicePokemon);
