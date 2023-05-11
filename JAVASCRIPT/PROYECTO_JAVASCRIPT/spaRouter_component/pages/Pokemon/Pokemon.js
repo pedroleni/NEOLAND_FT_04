@@ -1,5 +1,6 @@
 import { printButtons } from "../../components/ButtonPokemon/ButtonPokemon";
 import { createAndPrintFigure } from "../../components/CardPokemon/CardPokemon";
+import { printTemplateSpinner } from "../../components/Spinner/Spinner";
 import { dataPokemon, filterPokemon } from "../../utils/dataPokemon";
 import "./Pokemon.css";
 
@@ -15,6 +16,9 @@ const template = () =>
     <div id="containerFilter">
       <div id="filterButton"></div>
       <input type="text" id="inputPokemon" placeholder="Busca tu pokemon favorito"/>
+      <div id="spinner">
+
+      </div>
     </div>
 
     <div class="galleryPokemon"></div>
@@ -26,8 +30,12 @@ const template = () =>
 
 //TODO en el data service llamamos al servicio y creamos las figure que luego se pintaran
 const dataService = async () => {
+  // pinto el espiner
+  printTemplateSpinner();
+
   //llamamos al servicio para traer la DATA y le metemos la info a la variable global dataServicePokemon
   const getData = await dataPokemon();
+  /// borro el spinner
   /// sacamos por destructuring los dos elementos que nos envia la funcion
   const { type, pokemonData } = getData;
   /// se lo asignamos a las variables globales
@@ -35,8 +43,10 @@ const dataService = async () => {
   typeGlobal = type;
   //Enviamos la funcion para pintar las figure
   createAndPrintFigure(dataServicePokemon);
+
   /// me llamo a pintar los botones
   printButtons(type);
+  document.getElementById("spinner").innerHTML = "";
 };
 
 //! ----------------------------------------------------------------
