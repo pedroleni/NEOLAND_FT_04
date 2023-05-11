@@ -36,7 +36,7 @@ const dataService = async (data, type) => {
   /// nos llamamos a pintar las figuras porque esta funcion es de las primeras que se ejecutan
   createAndPrintFigure(dataServicePokemon);
   printButtons(type);
-  paginacion(data, 20);
+  paginacion(data, 30);
 };
 
 //! ----------------------------------------------------------------

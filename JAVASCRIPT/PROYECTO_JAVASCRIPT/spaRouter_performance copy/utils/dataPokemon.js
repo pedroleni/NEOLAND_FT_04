@@ -1,6 +1,8 @@
+import { createAndPrintFigure } from "../components/CardPokemon/CardPokemon";
 import { getPokemon } from "../services/pokemon.service";
 import { typePokemon } from "./typePokemon";
 
+let dataGlobal = [];
 export const dataPokemon = async () => {
   const data = [];
   for (let i = 1; i < 151; i++) {
@@ -18,11 +20,11 @@ const dataMap = (data) => {
   }));
   /// Nos llamamos a la funcion que nos trae el array con los type
   const type = typePokemon(filterData);
-
-  return {
+  dataGlobal = {
     type: type,
     dataPokemon: filterData,
   };
+  return dataGlobal;
 };
 
 //TODO ----------------------------------------------------------------
@@ -35,7 +37,7 @@ export const filterPokemon = (filtro, donde) => {
   switch (donde) {
     case "name":
       {
-        const filterData = dataGlobal.pokemonData.filter((pokemon) =>
+        const filterData = dataGlobal.dataPokemon.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(filtro.toLowerCase())
         );
         createAndPrintFigure(filterData);
@@ -43,12 +45,12 @@ export const filterPokemon = (filtro, donde) => {
       break;
     case "type": {
       //! Este es mas especial porque los typos pueden ser dos por lo que algunos tipos pueden aparecer en la posicion [1] del array type
-      const filterData = dataGlobal.pokemonData.filter((pokemon) =>
+      const filterData = dataGlobal.dataPokemon.filter((pokemon) =>
         pokemon.type[0].type.name.toLowerCase().includes(filtro.toLowerCase())
       );
       //! Evaluamos si filterData tiene longuitud 0 SI ES ASI ES QUE HAY QUE FILTRA CON EL type[1].type.name
       if (filterData.length === 0) {
-        const filterData = dataGlobal.pokemonData.filter((pokemon) =>
+        const filterData = dataGlobal.dataPokemon.filter((pokemon) =>
           //! ----> la intorragacion es un optional change por si no hay la posicion 1 ddl arrrray que no rompa la ejecucción
           pokemon.type[1]?.type.name
             .toLowerCase()
