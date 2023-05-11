@@ -8,7 +8,4 @@ export const dataApp = async () => {
   setDataGlobal({
     pokemonData: await getDataPokemon,
   });
-  return {
-    pokemonData: await getDataPokemon,
-  };
 };

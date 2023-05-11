@@ -73,6 +73,8 @@ const addListeners = () => {
       filterPokemon(type, "type");
     });
   });
+
+  dataApp();
 };
 
 //! ----------------------------------------------------------------
@@ -132,7 +134,7 @@ const printButtons = (types) => {
 //! -----------------------------------------------------------------
 
 //TODO ----> Importante el orden, primero pintamos el template general, despues gestionamos la data y por ultimo escuchadores
-export const printTemplate = (data) => {
+export const printTemplate = () => {
   const { pokemonData } = getDataGlobal();
   const { dataPokemon, type } = pokemonData;
   typeGlobal = type;
@@ -141,5 +143,4 @@ export const printTemplate = (data) => {
   dataService(dataPokemon);
   printButtons(type);
   addListeners();
-  dataApp();
 };
