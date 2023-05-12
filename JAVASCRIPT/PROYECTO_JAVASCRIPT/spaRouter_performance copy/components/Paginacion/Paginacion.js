@@ -1,1 +1,0 @@
-import "./Paginacion.css";

@@ -35,8 +35,12 @@ const template = () =>
 //TODO en el data service llamamos al servicio y creamos las figure que luego se pintaran
 const dataService = async (data, type) => {
   createAndPrintFigure(data.slice(0, 25));
+
   printButtons(type);
+
   paginacion(data, 25);
+  const firstButtonPag = document.querySelectorAll(".buttonPaginacion");
+  firstButtonPag[0].style.border = "solid 2px #0000ff6a";
 };
 
 //! ----------------------------------------------------------------
