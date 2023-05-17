@@ -6,10 +6,14 @@ const Character = require("../models/Character.model");
 //! ---------------------------------------------------------------------
 
 const create = async (req, res, next) => {
+  //! capturo la url para si luego la tengo que borrar y le pongo el optional chaining (?) para que no me rompa en caso que no tenga la clave path
+  let catchImg = req.file?.path;
   try {
     await Character.syncIndexes();
     // cremos un nuevo modelo con los datos que nos trae la request body
     const newCharacter = new Character(req.body);
+
+    // si nos envia imagen metemos la que nos dan sino metemos una foto general
     if (req.file) {
       newCharacter.image = req.file.path;
     } else {
@@ -29,9 +33,8 @@ const create = async (req, res, next) => {
     }
   } catch (error) {
     // lanzo por el next el error a nivel general de try cach para tener constancia en el log de este error
-    if (req.file.path) {
-      deleteImgCloudinary(req.file.path);
-    }
+    deleteImgCloudinary(catchImg);
+
     return next(error);
   }
 };
@@ -93,6 +96,8 @@ const getByName = async (req, res, next) => {
 //! ---------------------------------------------------------------------
 
 const updateCharacter = async (req, res, next) => {
+  //! capturo la url para si luego la tengo que borrar y le pongo el optional chaining (?) para que no me rompa en caso que no tenga la clave path
+  let catchImg = req.file?.path;
   try {
     const { id } = req.params;
 
@@ -144,7 +149,7 @@ const updateCharacter = async (req, res, next) => {
     //! por lo cual hay borrarla para no tener basura dentro de nuestro cloudinary
     if (req.file) {
       //! le pasamos el req.file.path que incluye la url de cloudinary
-      deleteImgCloudinary(req.file.path);
+      deleteImgCloudinary(catchImg);
     }
 
     // por ultimo lanzamos el errror que se guardara en el log del backend
