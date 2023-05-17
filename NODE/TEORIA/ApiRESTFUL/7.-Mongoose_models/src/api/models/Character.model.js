@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 /// Schema de datos:_____> DEFINICION DE DATOS
 
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
 /// Definimos el esqueleto del modelo character
 /// 1) Definimos lo primero el TYPE ----> tipo de dato
@@ -12,13 +12,14 @@ const Schema = mongoose.schema;
 
 const CharacterSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: false, unique: true },
     gender: {
       type: String,
       enum: ["hombre", "mujer", "fluido"],
-      required: true,
+      required: false,
     },
     age: { type: Number, required: false },
+    image: { type: String },
   },
   {
     timestamps: true,
