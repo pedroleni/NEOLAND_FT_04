@@ -25,7 +25,9 @@ const create = async (req, res, next) => {
     }
   } catch (error) {
     // lanzo por el next el error a nivel general de try cach para tener constancia en el log de este error
-    deleteImgCloudinary(req.file.path);
+    if (req.file) {
+      deleteImgCloudinary(req.file.path);
+    }
     return next(error);
   }
 };
