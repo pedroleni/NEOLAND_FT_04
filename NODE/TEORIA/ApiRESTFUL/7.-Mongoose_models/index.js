@@ -16,7 +16,7 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
 //! -----ROUTES-----------
-const CharacterRoutes = require("./src/api/routes/routes");
+const CharacterRoutes = require("./src/api/routes/Character.routes");
 
 app.use("/api/v1/character/", CharacterRoutes);
 
