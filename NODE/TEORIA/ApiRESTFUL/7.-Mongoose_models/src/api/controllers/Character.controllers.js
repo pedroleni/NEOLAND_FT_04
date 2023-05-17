@@ -10,7 +10,11 @@ const create = async (req, res, next) => {
     await Character.syncIndexes();
     // cremos un nuevo modelo con los datos que nos trae la request body
     const newCharacter = new Character(req.body);
-    newCharacter.image = req.file.path;
+    if (req.file) {
+      newCharacter.image = req.file.path;
+    } else {
+      newCharacter.image = "https://pic.onlinewebfonts.com/svg/img_181369.png";
+    }
 
     // lo guardamos en la db
     const saveCharacter = await newCharacter.save();
@@ -25,7 +29,7 @@ const create = async (req, res, next) => {
     }
   } catch (error) {
     // lanzo por el next el error a nivel general de try cach para tener constancia en el log de este error
-    if (req.file) {
+    if (req.file.path) {
       deleteImgCloudinary(req.file.path);
     }
     return next(error);
