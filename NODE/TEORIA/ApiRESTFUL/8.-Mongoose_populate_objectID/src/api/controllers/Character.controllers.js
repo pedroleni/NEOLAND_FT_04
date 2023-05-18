@@ -210,6 +210,8 @@ const deleteCharacter = async (req, res, next) => {
         next("Error en el borrado de la imagen");
       } else {
         deleteImgCloudinary(deleteCharacter.image);
+
+        // tengo que actualizar las movies que incluyan el id del character en el array de characters
         await Movie.updateMany(
           { characters: id },
           {
