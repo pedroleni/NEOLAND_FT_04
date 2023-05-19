@@ -5,6 +5,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const BASE_URL = process.env.BASE_URL;
+
 //! conectamos con la base de datos
 connect();
 const app = express();
@@ -45,5 +47,5 @@ app.use((error, req, res) => {
 //! ----ESCUCHAMOS EN EL PORT LA BASE DE DATOS ------
 app.disable('x-powered-by');
 app.listen(PORT, () => {
-  console.log(`Listening on PORT http://localhost:${PORT}`);
+  console.log(`Listening on PORT ${BASE_URL}${PORT}`);
 });
