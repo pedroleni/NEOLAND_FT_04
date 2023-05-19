@@ -10,22 +10,29 @@ const create = async (req, res, next) => {
   //! capturo la url para si luego la tengo que borrar y le pongo el optional chaining (?) para que no me rompa en caso que no tenga la clave path
   let catchImg = req.file?.path;
   try {
+    //! ------ actualizamos los indexes---------------
     await Character.syncIndexes();
+
+    // creamos este objeto porque no queremos incluir el array de las peliculas para que no nos rompa
     const filterBody = {
       name: req.body.name,
       gender: req.body.gender,
     };
-    // cremos un nuevo modelo con los datos que nos trae la request body
+    //! ------ cremos un nuevo modelo con los datos que nos trae la request body-------
     const newCharacter = new Character(filterBody);
 
     // cogemos las movies del req.body y las recorremos
     const { movie } = req.body;
+
+    // con el spli creamos un array
     const arrayMovie = movie.split(",");
+
+    // lo recorremos y le puseamos cada id de las movies al new character que creamos del modelo
     arrayMovie.forEach((item) => {
       newCharacter.movie.push(item);
     });
 
-    // si nos envia imagen metemos la que nos dan sino metemos una foto general
+    //!------- si nos envia imagen metemos la que nos dan sino metemos una foto general
     if (req.file) {
       newCharacter.image = req.file.path;
     } else {
@@ -38,27 +45,21 @@ const create = async (req, res, next) => {
     // evaluamos que se haya efectuado correctamente
     if (saveCharacter) {
       // si es un si: envio un 200 y un json con el objeto postedo
-      const arrayTest = [];
-      arrayMovie.forEach(async (itemID) => {
+      // recorremos antes el array de los id que recibimos por el req.body
+       arrayMovie.forEach(async (itemID) => {
         const movieById = await Movie.findById(itemID);
+
+        // actualizamos las movie para incluir el id del character 
         await movieById.updateOne({
           $push: { characters: saveCharacter._id },
         });
-        const testUpdateMovie = await Movie.findById(itemID);
-        arrayTest.push({
-          idMovie: itemID,
-          idCharacter: newCharacter._id,
-          testMovieUpdate: testUpdateMovie.characters.includes(
-            saveCharacter._id
-          )
-            ? true
-            : false,
-        });
-      });
-
+        })
+        // os hago un test mas sencillo, primero busco cuantas movies incluyen el id del character 
+        // luego en la respuesta comparo su logitud con el array de los id de las movies si son iguales todo ok sino moovie no actualzadas correctamente
+      const testMovie =  await Movie.find({characters: saveCharacter._id})
       return res.status(200).json({
         newCharacter: saveCharacter,
-        testMovieUpdate: arrayTest,
+        movieUpdate: testMovie.length == arrayMovie.length ? "movie update ok" : "no ok movie update"
       });
     } else {
       // si es un no: envio un 404 not found, de que no se ha enviado en elemento a la base de datos
@@ -209,6 +210,8 @@ const deleteCharacter = async (req, res, next) => {
         next("Error en el borrado de la imagen");
       } else {
         deleteImgCloudinary(deleteCharacter.image);
+
+        // tengo que actualizar las movies que incluyan el id del character en el array de characters
         await Movie.updateMany(
           { characters: id },
           {

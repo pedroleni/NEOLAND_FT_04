@@ -103,12 +103,16 @@ const deleteMovie = async (req, res, next) => {
 
     // esto anterior nos devuelve siempre el elemento buscado pero puede ser que no haya borrado por eso cuidado
     if (deleteMovie) {
+
+      /// tengo que actualizar todos los modelos de Character que incluyan en su array movie el id de la movie borrada
       await Character.updateMany({ movie: id }, { $pull: { movie: id } });
       const testCharacter = await Character.find({ movie: id });
+
+      // hago dos ttest uno para ver si se ha borrado correctamente y otro para comprobar que se actualizado los character
       return res.status(200).json({
         deleteMovie: deleteMovie,
-        test: (await Movie.findById(id)) ? "delete no ok" : "delete ok",
-        test:
+        testDeleteMovie: (await Movie.findById(id)) ? "delete no ok" : "delete ok",
+        testCharacter:
           testCharacter.length > 0
             ? "error update characters"
             : "ok update characters",
