@@ -6,7 +6,10 @@ const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
 const User = require('../models/user.model');
-const { getTestEmailSend } = require('../../state/state.data');
+const {
+  getTestEmailSend,
+  setTestEmailSend,
+} = require('../../state/state.data');
 const nodemailer = require('nodemailer');
 const { generateToken } = require('../../utils/token');
 const randomPassword = require('../../utils/randomPassword');
@@ -41,11 +44,13 @@ const register = async (req, res, next) => {
         sendEmail(email, name, confirmationCode);
         setTimeout(() => {
           if (getTestEmailSend()) {
+            setTestEmailSend(false);
             return res.status(200).json({
               user: userSave,
               confirmationCode,
             });
           } else {
+            setTestEmailSend(false);
             return res.status(404).json({
               user: userSave,
               confirmationCode: 'error, resend code',
@@ -248,6 +253,99 @@ const login = async (req, res, next) => {
 };
 
 //! -----------------------------------------------------------------------------
+//? -----------------------RESEND CODE -----------------------------
+//! -----------------------------------------------------------------------------
+const resendCode = async (req, res, next) => {
+  try {
+    //! vamos a configurar nodemailer porque tenemos que enviar un codigo
+    const email = process.env.EMAIL;
+    const password = process.env.PASSWORD;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: email,
+        pass: password,
+      },
+    });
+    //! hay que ver que el usuario exista porque si no existe no tiene sentido hacer ninguna verificacion
+    const userExists = await User.findOne({ email: req.body.email });
+
+    if (userExists) {
+      const mailOptions = {
+        from: email,
+        to: req.body.email,
+        subject: 'Confirmation code',
+        text: `tu codigo es ${userExists.confirmationCode}`,
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          return res.status(200).json({
+            resend: true,
+          });
+        }
+      });
+    } else {
+      return res.status(404).json('User not found');
+    }
+  } catch (error) {
+    return next(setError(500, error.message || 'Error general send code'));
+  }
+};
+
+//! ------------------------------------------------------------------------
+//? -------------------------- CHECK NEW USER------------------------------
+//! ------------------------------------------------------------------------
+
+const checkNewUser = async (req, res, next) => {
+  try {
+    //! nos traemos de la req.body el email y codigo de confirmation
+    const { email, confirmationCode } = req.body;
+
+    //! hay que ver que el usuario exista porque si no existe no tiene sentido hacer ninguna verificacion
+    const userExists = await User.findOne({ email });
+    if (!userExists) {
+      //!No existe----> 404 de no se encuentra
+      return res.status(404).json('User not found');
+    } else {
+      // cogemos que comparamos que el codigo que recibimos por la req.body y el del userExists es igual
+      if (confirmationCode === userExists.confirmationCode) {
+        // si es igual actualizamos la propiedad check y la ponemos a true
+        await userExists.updateOne({ check: true });
+        // hacemos un testeo de que este user se ha actualizado correctamente, hacemos un findOne
+        const updateUser = await User.findOne({ email });
+
+        // este finOne nos sirve para hacer un ternario que nos diga si la propiedad vale true o false
+        return res.status(200).json({
+          testCheckOk: updateUser.check == true ? true : false,
+        });
+      } else {
+        /// En caso dec equivocarse con el codigo lo borramos de la base datos y lo mandamos al registro
+        const deleteUser = await User.findByIdAndDelete(userExists._id);
+
+        // borramos la imagen
+        deleteImgCloudinary(userExists.image);
+
+        // devolvemos un 200 con el test de ver si el delete se ha hecho correctamente
+        return res.status(200).json({
+          userExists,
+          check: false,
+          delete: (await User.findById(userExists._id))
+            ? 'error delete user'
+            : 'ok delete user',
+        });
+      }
+    }
+  } catch (error) {
+    // siempre en el catch devolvemos un 500 con el error general
+    return next(setError(500, 'General error check code'));
+  }
+};
+
+//! -----------------------------------------------------------------------------
 //? -----------------------CONTRASEÑAS Y SUS CAMBIOS-----------------------------
 //! -----------------------------------------------------------------------------
 
@@ -359,6 +457,8 @@ const update = async (req, res, next) => {
     patchUser._id = req.user._id;
     patchUser.password = req.user.password;
     patchUser.rol = req.user.rol;
+    patchUser.confirmationCode = req.user.confirmationCode;
+    patchUser.check = req.user.check;
     await User.findByIdAndUpdate(req.user._id, patchUser);
     if (req.file) {
       deleteImgCloudinary(req.user.image);
@@ -371,6 +471,10 @@ const update = async (req, res, next) => {
       if (updateUser[item] === req.body[item]) {
         testUpdate.push({
           [item]: true,
+        });
+      } else {
+        testUpdate.push({
+          [item]: false,
         });
       }
     });
@@ -416,6 +520,7 @@ const deleteUser = async (req, res, next) => {
 module.exports = {
   register,
   registerSlow,
+  resendCode,
   sendCode,
   registerWithRedirect,
   login,
@@ -424,4 +529,5 @@ module.exports = {
   modifyPassword,
   update,
   deleteUser,
+  checkNewUser,
 };
