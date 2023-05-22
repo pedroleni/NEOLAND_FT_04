@@ -167,7 +167,9 @@ const registerWithRedirect = async (req, res, next) => {
       return res.status(409).json('this user already exist');
     }
   } catch (error) {
-    deleteImgCloudinary(catchImg);
+    if (req.file) {
+      deleteImgCloudinary(catchImg);
+    }
     return next(error);
   }
 };
