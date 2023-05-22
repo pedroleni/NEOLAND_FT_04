@@ -459,6 +459,7 @@ const update = async (req, res, next) => {
     patchUser.rol = req.user.rol;
     patchUser.confirmationCode = req.user.confirmationCode;
     patchUser.check = req.user.check;
+    patchUser.email = req.user.email;
     await User.findByIdAndUpdate(req.user._id, patchUser);
     if (req.file) {
       deleteImgCloudinary(req.user.image);
@@ -468,7 +469,7 @@ const update = async (req, res, next) => {
 
     const testUpdate = [];
     updateKeys.forEach((item) => {
-      if (updateUser[item] === req.body[item]) {
+      if (updateUser[item] == req.body[item]) {
         testUpdate.push({
           [item]: true,
         });
@@ -512,7 +513,6 @@ const deleteUser = async (req, res, next) => {
       return res.status(200).json('ok delete');
     }
   } catch (error) {
-    deleteImgCloudinary(req.user.image);
     return next(error);
   }
 };
