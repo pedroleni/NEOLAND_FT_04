@@ -1,4 +1,4 @@
-const { isAuth, isAuthAdmin } = require('../../middleware/auth.middleware');
+const { isAuth } = require('../../middleware/auth.middleware');
 const { upload } = require('../../middleware/files.middleware');
 const {
   register,

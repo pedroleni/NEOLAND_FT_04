@@ -141,8 +141,6 @@ const registerWithRedirect = async (req, res, next) => {
   let catchImg = req.file?.path;
   try {
     let confirmationCode = randomCode();
-    const { email, name } = req.body;
-
     const userExist = await User.findOne(
       { email: req.body.email },
       { name: req.body.name }
@@ -326,7 +324,7 @@ const checkNewUser = async (req, res, next) => {
         });
       } else {
         /// En caso dec equivocarse con el codigo lo borramos de la base datos y lo mandamos al registro
-        const deleteUser = await User.findByIdAndDelete(userExists._id);
+        await User.findByIdAndDelete(userExists._id);
 
         // borramos la imagen
         deleteImgCloudinary(userExists.image);
@@ -366,7 +364,9 @@ const changePassword = async (req, res, next) => {
     } else {
       return res.status(404).json('User no register');
     }
-  } catch (error) {}
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const sendPassword = async (req, res, next) => {
