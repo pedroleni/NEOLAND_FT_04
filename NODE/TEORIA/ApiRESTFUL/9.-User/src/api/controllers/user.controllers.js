@@ -23,6 +23,7 @@ const BASE_URL_COMPLETE = `${BASE_URL}${PORT}`;
 const register = async (req, res, next) => {
   let catchImg = req.file?.path;
   try {
+    await User.syncIndexes();
     let confirmationCode = randomCode();
     const { email, name } = req.body;
 
@@ -73,6 +74,7 @@ const register = async (req, res, next) => {
 const registerSlow = async (req, res, next) => {
   let catchImg = req.file?.path;
   try {
+    await User.syncIndexes();
     let confirmationCode = randomCode();
     const { email, name } = req.body;
 
@@ -140,6 +142,7 @@ const registerSlow = async (req, res, next) => {
 const registerWithRedirect = async (req, res, next) => {
   let catchImg = req.file?.path;
   try {
+    await User.syncIndexes();
     let confirmationCode = randomCode();
     const userExist = await User.findOne(
       { email: req.body.email },
@@ -451,6 +454,7 @@ const modifyPassword = async (req, res, next) => {
 const update = async (req, res, next) => {
   let catchImg = req.file?.path;
   try {
+    await User.syncIndexes();
     const patchUser = new User(req.body);
     if (req.file) {
       patchUser.image = req.file.path;
