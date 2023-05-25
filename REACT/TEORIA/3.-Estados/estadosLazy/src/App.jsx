@@ -24,7 +24,9 @@ function App() {
     // seteo el estado lo que hace que haya un render de la parte que utilice le estado.
     setCount(updateCount);
   };
-
+  const getCountState = () => {
+    return count;
+  };
   return (
     <>
       <h1>Contador de nuestro primera APP</h1>
