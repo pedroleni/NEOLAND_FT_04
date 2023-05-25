@@ -1,0 +1,9 @@
+footer {
+  height: 10vh;
+  border: 1px solid black;
+  width: 100%;
+}
+
+.parrafoFooter {
+  background-color: aqua;
+}
