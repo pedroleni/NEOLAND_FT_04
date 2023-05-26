@@ -12,10 +12,16 @@ nav {
   gap: 2rem;
 }
 
+/* esto seria si el link a dentro del button pero pero mejor poner el navlink fuera y el button dentro 
+
+
 button:has(a.active) {
   background-color: blueviolet;
-}
+} */
 
+a.active button {
+  background-color: blueviolet;
+}
 a.active {
   color: white;
 }
