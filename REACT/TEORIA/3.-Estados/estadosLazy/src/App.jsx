@@ -9,21 +9,21 @@ function App() {
       ? 0
       : parseInt(localStorage.getItem("count"));
   });
+
+  //? ----------FUNCION SET ----------------------------------------------
   //! funcion seteadora del estado que se encuentra en el padre aunque la utilice el hijo
   const setCountState = (data) => {
     // me hago una constante y sumo el valor del estado actual a lo que recibo por la funcion
     const updateCount = count + data;
-
     // lo seteo en el localstorage
     localStorage.setItem("count", updateCount);
-
     // lo saco por consola para comprobar que este correcto
-
     console.log(updateCount);
-
     // seteo el estado lo que hace que haya un render de la parte que utilice le estado.
     setCount(updateCount);
   };
+
+  //? --------------- GET ITEM------------------------------------------------
   const getCountState = () => {
     return count;
   };
