@@ -22,6 +22,6 @@ button:has(a.active) {
 a.active button {
   background-color: blueviolet;
 }
-a.active {
+a.active button {
   color: white;
 }
