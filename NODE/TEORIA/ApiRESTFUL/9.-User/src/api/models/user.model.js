@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
     rol: {
       type: String,
       enum: ['admin', 'user'],
-      required: true,
+      default: 'user',
     },
     confirmationCode: {
       type: Number,

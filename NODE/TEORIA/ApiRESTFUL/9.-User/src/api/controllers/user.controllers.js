@@ -16,6 +16,7 @@ const randomPassword = require('../../utils/randomPassword');
 const PORT = process.env.PORT;
 const BASE_URL = process.env.BASE_URL;
 const BASE_URL_COMPLETE = `${BASE_URL}${PORT}`;
+
 //! -----------------------------------------------------------------------------
 //? ----------------------------REGISTER CORTO EN CODIGO ------------------------
 //! -----------------------------------------------------------------------------
@@ -60,11 +61,11 @@ const register = async (req, res, next) => {
         }, 1100);
       }
     } else {
-      deleteImgCloudinary(catchImg);
+      if (req.file) deleteImgCloudinary(catchImg);
       return res.status(409).json('this user already exist');
     }
   } catch (error) {
-    deleteImgCloudinary(catchImg);
+    if (req.file) deleteImgCloudinary(catchImg);
     return next(error);
   }
 };
@@ -128,11 +129,11 @@ const registerSlow = async (req, res, next) => {
         });
       }
     } else {
-      deleteImgCloudinary(catchImg);
+      if (req.file) deleteImgCloudinary(catchImg);
       return res.status(409).json('this user already exist');
     }
   } catch (error) {
-    deleteImgCloudinary(catchImg);
+    if (req.file) deleteImgCloudinary(catchImg);
     return next(error);
   }
 };
@@ -164,7 +165,7 @@ const registerWithRedirect = async (req, res, next) => {
         );
       }
     } else {
-      deleteImgCloudinary(catchImg);
+      if (req.file) deleteImgCloudinary(catchImg);
       return res.status(409).json('this user already exist');
     }
   } catch (error) {
@@ -499,7 +500,7 @@ const update = async (req, res, next) => {
       testUpdate,
     });
   } catch (error) {
-    deleteImgCloudinary(catchImg);
+    if (req.file) deleteImgCloudinary(catchImg);
     return next(error);
   }
 };

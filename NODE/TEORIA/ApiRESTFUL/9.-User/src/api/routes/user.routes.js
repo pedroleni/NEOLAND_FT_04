@@ -28,6 +28,7 @@ UserRoutes.patch('/changepassword', [isAuth], modifyPassword);
 UserRoutes.patch('/update/update', [isAuth], upload.single('image'), update);
 UserRoutes.delete('/', [isAuth], deleteUser);
 UserRoutes.post('/check', checkNewUser);
+
 //!---------------- REDIRECT-------------------------------
 UserRoutes.get('/register/sendMail/:id', sendCode);
 UserRoutes.get('/sendPassword/:id', sendPassword);
