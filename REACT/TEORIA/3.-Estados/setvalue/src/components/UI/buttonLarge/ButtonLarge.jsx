@@ -1,6 +1,6 @@
 import "./ButtonLarge.css";
 
-const ButtonLarge = ({ setCount }) => {
+const ButtonLarge = ({ children, setCount }) => {
   return (
     <button
       onClick={() => {
