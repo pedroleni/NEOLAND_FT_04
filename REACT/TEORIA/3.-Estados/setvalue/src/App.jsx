@@ -14,7 +14,7 @@ export const App = () => {
     <>
       <h1>Contador de nuestro primera APP</h1>
       <p>El valor del contador es {count}</p>
-
+      {/* madamons el setcount para el hijo cambie el estado al padre */}
       <ButtonLarge setCount={setCount}>
         Cambiar el estado del contador
       </ButtonLarge>

@@ -3,10 +3,13 @@ import useCounter from "../hooks/useCounter";
 import Parrafo from "./Parrafo";
 
 const CounterWithCustomHook = () => {
+  // nos traemos el counter con sus funciones correspondientes del useCounter
   const { counter, increment, decrement, reset, resetCustom } = useCounter();
+
+  // aqui podemos ver cuando se monta y se desmonta
   useEffect(() => {
     console.log(" me monto");
-
+    // este return nos devuelve cuando el componente se ha desmontado del viewport
     return () => {
       console.log("me desmonto");
     };
@@ -14,9 +17,12 @@ const CounterWithCustomHook = () => {
 
   return (
     <>
+      {/* si counter es mas que 40 sacamos el componente parrafo para ver cuando see desmonta y monta */}
       {counter === 40 && <Parrafo />}
       <h1>Counter value: {counter}</h1>
       <hr />
+
+      {/* Ponemos los diferente botones para ver que el customHook funciona  */}
       <button onClick={() => increment(1)} className="btn btn-primary">
         INCREMENT
       </button>

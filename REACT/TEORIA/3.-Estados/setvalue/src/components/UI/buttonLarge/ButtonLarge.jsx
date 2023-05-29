@@ -4,6 +4,7 @@ const ButtonLarge = ({ setCount }) => {
   return (
     <button
       onClick={() => {
+        /// CON LA CALLBACK INTERNA PORDEMOS COGER EL VALOR DEL ESTADO
         setCount((value) => {
           const newValue = value + 1;
           console.log(

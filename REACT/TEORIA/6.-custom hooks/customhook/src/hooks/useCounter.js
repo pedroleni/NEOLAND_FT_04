@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const useCounter = (initialValue = 10) => {
+  // el estado lo va a gestionar este customHook
   const [counter, setCounter] = useState(initialValue);
 
   const increment = (value = 1) => {
@@ -19,7 +20,7 @@ const useCounter = (initialValue = 10) => {
   const resetCustom = (value = 20) => {
     setCounter(value);
   };
-
+  // DEVOLVEMOS EL COUNTER Y LAS FUNCIONES QUE MODIFICAN EL ESTADO
   return {
     counter,
     increment,

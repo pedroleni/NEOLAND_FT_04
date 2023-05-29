@@ -1,5 +1,3 @@
-import { useEffect, useState, useRef } from "react";
-
 export const Quote = ({ author, quote }) => {
   return (
     <>
