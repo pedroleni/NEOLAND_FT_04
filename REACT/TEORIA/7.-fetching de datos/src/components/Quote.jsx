@@ -1,0 +1,12 @@
+import { useEffect, useState, useRef } from "react";
+
+export const Quote = ({ author, quote }) => {
+  return (
+    <>
+      <blockquote className="blockquote text-end" style={{ display: "flex" }}>
+        <p>{quote}</p>
+        <footer className="blockquote-footer">{author}</footer>
+      </blockquote>
+    </>
+  );
+};
