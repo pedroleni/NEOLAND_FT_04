@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema(
       validate: [validator.isStrongPassword],
       minlength: [8, 'Min 8 characters'],
     },
-    gender: {
-      type: String,
-      enum: ['hombre', 'mujer'],
-      required: true,
-    },
+    // gender: {
+    //   type: String,
+    //   enum: ['hombre', 'mujer'],
+    //   required: true,
+    // },
     rol: {
       type: String,
       enum: ['admin', 'user'],
