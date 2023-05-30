@@ -25,7 +25,11 @@ const useUserError = (res) => {
 
   // error --> nombre de usuario ya exista // error ---> correo ya existe
 
-  if (res?.response?.data?.keyValue)
+  if (
+    res?.response?.data?.includes(
+      "duplicate key error collection: userProyect.users index: name_1 dup key: { name"
+    )
+  )
     Swal.fire({
       icon: "error",
       title: "Oops...",
@@ -36,7 +40,7 @@ const useUserError = (res) => {
 
   // error ---> validacion de la contraseña
 
-  if (res?.response?.data?.message?.includes("validation failed: password"))
+  if (res?.response?.data?.includes("validation failed: password"))
     Swal.fire({
       icon: "error",
       title: "Oops...",
