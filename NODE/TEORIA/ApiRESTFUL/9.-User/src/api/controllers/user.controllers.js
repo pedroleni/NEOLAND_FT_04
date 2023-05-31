@@ -13,10 +13,10 @@ const {
 const nodemailer = require('nodemailer');
 const { generateToken } = require('../../utils/token');
 const randomPassword = require('../../utils/randomPassword');
+
 const PORT = process.env.PORT;
 const BASE_URL = process.env.BASE_URL;
 const BASE_URL_COMPLETE = `${BASE_URL}${PORT}`;
-
 //! -----------------------------------------------------------------------------
 //? ----------------------------REGISTER CORTO EN CODIGO ------------------------
 //! -----------------------------------------------------------------------------
@@ -40,25 +40,29 @@ const register = async (req, res, next) => {
         newUser.image = 'https://pic.onlinewebfonts.com/svg/img_181369.png';
       }
 
-      const userSave = await newUser.save();
+      try {
+        const userSave = await newUser.save();
 
-      if (userSave) {
-        sendEmail(email, name, confirmationCode);
-        setTimeout(() => {
-          if (getTestEmailSend()) {
-            setTestEmailSend(false);
-            return res.status(200).json({
-              user: userSave,
-              confirmationCode,
-            });
-          } else {
-            setTestEmailSend(false);
-            return res.status(404).json({
-              user: userSave,
-              confirmationCode: 'error, resend code',
-            });
-          }
-        }, 1100);
+        if (userSave) {
+          sendEmail(email, name, confirmationCode);
+          setTimeout(() => {
+            if (getTestEmailSend()) {
+              setTestEmailSend(false);
+              return res.status(200).json({
+                user: userSave,
+                confirmationCode,
+              });
+            } else {
+              setTestEmailSend(false);
+              return res.status(404).json({
+                user: userSave,
+                confirmationCode: 'error, resend code',
+              });
+            }
+          }, 1100);
+        }
+      } catch (error) {
+        return res.status(404).json(error.message);
       }
     } else {
       if (req.file) deleteImgCloudinary(catchImg);
@@ -90,43 +94,46 @@ const registerSlow = async (req, res, next) => {
       } else {
         newUser.image = 'https://pic.onlinewebfonts.com/svg/img_181369.png';
       }
+      try {
+        const userSave = await newUser.save();
 
-      const userSave = await newUser.save();
+        if (userSave) {
+          const emailEnv = process.env.EMAIL;
+          const password = process.env.PASSWORD;
 
-      if (userSave) {
-        const emailEnv = process.env.EMAIL;
-        const password = process.env.PASSWORD;
+          const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: emailEnv,
+              pass: password,
+            },
+          });
 
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: emailEnv,
-            pass: password,
-          },
-        });
+          const mailOptions = {
+            from: emailEnv,
+            to: email,
+            subject: 'Confirmation code',
+            text: `tu codigo es ${confirmationCode}, gracias por confiar en nosotros ${name}`,
+          };
 
-        const mailOptions = {
-          from: emailEnv,
-          to: email,
-          subject: 'Confirmation code',
-          text: `tu codigo es ${confirmationCode}, gracias por confiar en nosotros ${name}`,
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            console.log(error);
-            return res.status(404).json({
-              user: userSave,
-              confirmationCode: 'error, resend code',
-            });
-          } else {
-            console.log('Email sent: ' + info.response);
-            return res.status(200).json({
-              user: userSave,
-              confirmationCode,
-            });
-          }
-        });
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              return res.status(404).json({
+                user: userSave,
+                confirmationCode: 'error, resend code',
+              });
+            } else {
+              console.log('Email sent: ' + info.response);
+              return res.status(200).json({
+                user: userSave,
+                confirmationCode,
+              });
+            }
+          });
+        }
+      } catch (error) {
+        return res.status(404).json(error.message);
       }
     } else {
       if (req.file) deleteImgCloudinary(catchImg);
@@ -157,12 +164,16 @@ const registerWithRedirect = async (req, res, next) => {
         newUser.image = 'https://pic.onlinewebfonts.com/svg/img_181369.png';
       }
 
-      const userSave = await newUser.save();
+      try {
+        const userSave = await newUser.save();
 
-      if (userSave) {
-        return res.redirect(
-          `${BASE_URL_COMPLETE}/api/v1/users/register/sendMail/${userSave._id}`
-        );
+        if (userSave) {
+          return res.redirect(
+            `${BASE_URL_COMPLETE}/api/v1/users/register/sendMail/${userSave._id}`
+          );
+        }
+      } catch (error) {
+        return res.status(404).json(error.message);
       }
     } else {
       if (req.file) deleteImgCloudinary(catchImg);
@@ -318,7 +329,13 @@ const checkNewUser = async (req, res, next) => {
       // cogemos que comparamos que el codigo que recibimos por la req.body y el del userExists es igual
       if (confirmationCode === userExists.confirmationCode) {
         // si es igual actualizamos la propiedad check y la ponemos a true
-        await userExists.updateOne({ check: true });
+
+        try {
+          await userExists.updateOne({ check: true });
+        } catch (error) {
+          return res.status(404).json(error.message);
+        }
+
         // hacemos un testeo de que este user se ha actualizado correctamente, hacemos un findOne
         const updateUser = await User.findOne({ email });
 
@@ -401,18 +418,23 @@ const sendPassword = async (req, res, next) => {
       } else {
         console.log('Email sent: ' + info.response);
         const newPasswordBcrypt = bcrypt.hashSync(passwordSecure, 10);
-        await User.findByIdAndUpdate(id, { password: newPasswordBcrypt });
-        const userUpdatePassword = await User.findById(id);
-        if (bcrypt.compareSync(passwordSecure, userUpdatePassword.password)) {
-          return res.status(200).json({
-            updateUser: true,
-            sendPassword: true,
-          });
-        } else {
-          return res.status(404).json({
-            updateUser: false,
-            sendPassword: true,
-          });
+
+        try {
+          await User.findByIdAndUpdate(id, { password: newPasswordBcrypt });
+          const userUpdatePassword = await User.findById(id);
+          if (bcrypt.compareSync(passwordSecure, userUpdatePassword.password)) {
+            return res.status(200).json({
+              updateUser: true,
+              sendPassword: true,
+            });
+          } else {
+            return res.status(404).json({
+              updateUser: false,
+              sendPassword: true,
+            });
+          }
+        } catch (error) {
+          return res.status(404).json(error.message);
         }
       }
     });
@@ -430,16 +452,21 @@ const modifyPassword = async (req, res, next) => {
     const { _id } = req.user;
     if (bcrypt.compareSync(password, req.user.password)) {
       const newPasswordHashed = bcrypt.hashSync(newPassword, 10);
-      await User.findByIdAndUpdate(_id, { password: newPasswordHashed });
-      const userUpdate = await User.findById(_id);
-      if (bcrypt.compareSync(newPassword, userUpdate.password)) {
-        return res.status(200).json({
-          updateUser: true,
-        });
-      } else {
-        return res.status(200).json({
-          updateUser: false,
-        });
+
+      try {
+        await User.findByIdAndUpdate(_id, { password: newPasswordHashed });
+        const userUpdate = await User.findById(_id);
+        if (bcrypt.compareSync(newPassword, userUpdate.password)) {
+          return res.status(200).json({
+            updateUser: true,
+          });
+        } else {
+          return res.status(200).json({
+            updateUser: false,
+          });
+        }
+      } catch (error) {
+        return res.status(404).json(error.message);
       }
     } else {
       return res.status(404).json('password dont match');
@@ -467,38 +494,43 @@ const update = async (req, res, next) => {
     patchUser.confirmationCode = req.user.confirmationCode;
     patchUser.check = req.user.check;
     patchUser.email = req.user.email;
-    await User.findByIdAndUpdate(req.user._id, patchUser);
-    if (req.file) {
-      deleteImgCloudinary(req.user.image);
-    }
-    const updateUser = await User.findById(req.user._id);
-    const updateKeys = Object.keys(req.body);
 
-    const testUpdate = [];
-    updateKeys.forEach((item) => {
-      if (updateUser[item] == req.body[item]) {
-        testUpdate.push({
-          [item]: true,
-        });
-      } else {
-        testUpdate.push({
-          [item]: false,
-        });
+    try {
+      await User.findByIdAndUpdate(req.user._id, patchUser);
+      if (req.file) {
+        deleteImgCloudinary(req.user.image);
       }
-    });
+      const updateUser = await User.findById(req.user._id);
+      const updateKeys = Object.keys(req.body);
 
-    if (req.file) {
-      updateUser.image == req.file.path
-        ? testUpdate.push({
-            file: true,
-          })
-        : testUpdate.push({
-            file: false,
+      const testUpdate = [];
+      updateKeys.forEach((item) => {
+        if (updateUser[item] == req.body[item]) {
+          testUpdate.push({
+            [item]: true,
           });
+        } else {
+          testUpdate.push({
+            [item]: false,
+          });
+        }
+      });
+
+      if (req.file) {
+        updateUser.image == req.file.path
+          ? testUpdate.push({
+              file: true,
+            })
+          : testUpdate.push({
+              file: false,
+            });
+      }
+      return res.status(200).json({
+        testUpdate,
+      });
+    } catch (error) {
+      return res.status(404).json(error.message);
     }
-    return res.status(200).json({
-      testUpdate,
-    });
   } catch (error) {
     if (req.file) deleteImgCloudinary(catchImg);
     return next(error);
