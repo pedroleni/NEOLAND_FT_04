@@ -20,6 +20,16 @@ const useUserError = (res) => {
       showConfirmButton: false,
       timer: 1500,
     });
+  // res --> 500 --> Error general del server
+
+  if (res?.response?.status == 500)
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Sorry, internal error",
+      showConfirmButton: false,
+      timer: 1500,
+    });
 
   // res --> 404 --> codigo en el envio del codigo
 
