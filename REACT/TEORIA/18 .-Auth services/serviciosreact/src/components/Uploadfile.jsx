@@ -20,7 +20,6 @@ const Uploadfile = ({ registerForm }) => {
     };
 
     const fileSelectHandler = (e) => {
-      console.log("file", e.target.files);
       // Fetch FileList object
       let files = e.target.files || e.dataTransfer.files;
 
@@ -41,7 +40,6 @@ const Uploadfile = ({ registerForm }) => {
     };
 
     function parseFile(file) {
-      console.log(file.name);
       output("<strong>" + encodeURI(file.name) + "</strong>");
       let imageName = file.name;
 

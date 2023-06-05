@@ -1,20 +1,35 @@
 import "./Login.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import useLoginError from "../hooks/useLoginError";
+import { loginUser } from "../services/API_proyect/user.service";
+import { useAuth } from "../contexts/authContext";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
+  const [loginOk, setLoginOk] = useState(false);
+  const { userlogin } = useAuth();
 
-  const formSubmit = async (formData) => {};
+  //! ---------- FUNCION QUE GESTIONA LA DATA DEL FORMULARIO-----------------------
+  const formSubmit = async (formData) => {
+    setSend(true);
+    setRes(await loginUser(formData));
+    setSend(false);
+  };
 
+  //! ---------USEffect ASOCIADO A LA RES PARA GESTIONAR LOS ERRORES----------------
   useEffect(() => {
-    // if (useUserError(res)) {
-    //   setRes({});
-    // }
+    useLoginError(res, setLoginOk, userlogin);
   }, [res]);
+
+  //! ---------- LOS CONDICIONALES QUE GESTIONAN LOS ESTADOS DE NAVEGACION--------------
+
+  if (loginOk) {
+    return <Navigate to="/dashboard" />;
+  }
   return (
     <>
       <div className="form-wrap">
@@ -61,7 +76,10 @@ const Login = () => {
           </div>
           <p className="bottom-text">
             <small>
-              Have you forgotten the password? <a href="#">Change password</a>{" "}
+              Have you forgotten the password?
+              <Link to="/forgotpassword" className="anchorCustom">
+                Change password
+              </Link>
             </small>
           </p>
         </form>

@@ -3,13 +3,13 @@ import { useAuth } from "../contexts/authContext";
 import "./Home.css";
 
 export const Home = () => {
-  const { setUser, user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   return (
     <div className="homeContainer">
       {user !== null ? (
-        <h1 className="titleHome">Bienvenido {user}</h1>
+        <h1 className="titleHome">Bienvenido {user.user}</h1>
       ) : (
         <>
           <h1 className="titleHome">

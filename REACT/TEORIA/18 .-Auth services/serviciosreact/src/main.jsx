@@ -11,6 +11,8 @@ import { Home } from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import CheckCode from "./pages/CheckCode.jsx";
 import { AuthContextProvider } from "./contexts/authContext.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ProtectedCheck from "./components/ProtectedCheck.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -22,7 +24,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/verifyCode" element={<CheckCode />} />
+            <Route
+              path="/verifyCode"
+              element={
+                <ProtectedCheck>
+                  <CheckCode />
+                </ProtectedCheck>
+              }
+            />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
 
             {/* Tiene proteccion de rutas */}
             <Route

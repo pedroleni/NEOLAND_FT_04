@@ -1,11 +1,14 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
 
 export const Protected = ({ children }) => {
   // tendremos que traernos el user del contexto
 
-  // if(user == null){
-  //     return <Navigate to="/login"/>
-  // }
+  const { user } = useAuth();
+
+  if (user == null) {
+    return <Navigate to="/login" />;
+  }
 
   return children;
 };

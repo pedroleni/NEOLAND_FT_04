@@ -2,20 +2,46 @@ import "./CheckCode.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../contexts/authContext";
+import { checkCodeConfirmationUser } from "../services/API_proyect/user.service";
+import useCheckCodeError from "../hooks/useCheckCodeError";
+import { Navigate } from "react-router-dom";
+
 const CheckCode = () => {
+  const { allUser } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
+  const [deleteUser, setDeleteUser] = useState(false);
+  const [okCheck, setOkCheck] = useState(false);
 
-  const formSubmit = async (formData) => {};
-  const { allUser } = useAuth();
+  //! -------FUNCION QUE GESTIONA LA DATA DEL FORMULARIO-------
+  const formSubmit = async (formData) => {
+    const custFormData = {
+      confirmationCode: parseInt(formData.confirmationCode),
+      email: allUser.data.user.email,
+    };
+    setSend(true);
+    setRes(await checkCodeConfirmationUser(custFormData));
+    setSend(false);
+  };
+
+  //! --------USE EFFECT QUE NOSC SIRVE CUANDO CAMBIA RES A LANZAR EL COMPROBADOR DE ERRORES
   useEffect(() => {
-    // if (useUserError(res)) {
-    //   setRes({});
-    // }
-
-    console.log(allUser);
+    useCheckCodeError(res, setDeleteUser, setOkCheck);
   }, [res]);
+
+  useEffect(() => {
+    console.log(allUser);
+  }, [allUser]);
+
+  //! -------- PONEMOS LOS CONDICIONALES QUE EVALUAN SI ESTAN A TRUE LOS ESTADOS DE NAVEGACION (deleUser, okCheck)
+  if (deleteUser) {
+    return <Navigate to="/register" />;
+  }
+
+  if (okCheck) {
+    return <Navigate to="/login" />;
+  }
   return (
     <>
       <div className="form-wrap">
@@ -29,7 +55,7 @@ const CheckCode = () => {
               id="name"
               name="name"
               autoComplete="false"
-              {...register("name", { required: true })}
+              {...register("confirmationCode", { required: true })}
             />
             <label htmlFor="custom-input" className="custom-placeholder">
               Registration code

@@ -4,18 +4,23 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  /// ESTADO DEL ESTADO
-
+  //! -----> TENEMOS UN ESTADO DEL USUARIO EN GENERAL ---------------------------
   const [user, setUser] = useState(() => {
-    if (localStorage.getItem("user")) {
-      return localStorage.getItem("user");
+    const data = localStorage.getItem("user");
+    const parseUser = JSON.parse(data);
+
+    if (data) {
+      return parseUser;
     } else {
       return null;
     }
   });
 
+  //! -------> ESTE ESTADO SIRVE SOLO PARA EL REGISTER PARA SETEAR LA RESPUESTA--------
+  //! ----------------Puede utlizarase como estado de transicion( estado que nos sirve para guardar respuestas)
   const [allUser, setAllUser] = useState({});
 
+  //! --------> FUNCION PUENTE PARA SETEAR ESTADOS EN CASO DE TENER PROBLEMAS CON LA ASINCRONIA DE REACT----
   const bridgeData = (state) => {
     const data = localStorage.getItem("data");
     const dataJson = JSON.parse(data);
@@ -31,23 +36,26 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const login = (data) => {
-    setUser(data);
-    navigate("/dashboard", { replace: true });
+  //! ------------- FUNCION QUE GESTIONA EL LOGIN DEL USER -----------------------------
+  const userlogin = (data) => {
+    // recibimos la data en formato string, es un objeto
+    localStorage.setItem("user", data);
+    // parseamos la data que la recibimos en string y la metemos al estado
+    const parseData = JSON.parse(data);
+    setUser(() => parseData);
   };
 
+  //! ----------------FUNCION QUE GESTIONA EL LOGOUT ----------------------------------------
   const logout = () => {
+    localStorage.removeItem("user");
     setUser(null);
-    navigate("/home", { replace: true });
   };
 
   const value = useMemo(
     () => ({
       user,
       setUser,
-      login,
+      userlogin,
       logout,
       allUser,
       setAllUser,

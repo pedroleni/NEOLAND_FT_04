@@ -8,7 +8,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 
 const Register = () => {
-  const { setAllUser, allUser, bridgeData } = useAuth();
+  const { bridgeData } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [registerOk, setRegisterOk] = useState(false);
