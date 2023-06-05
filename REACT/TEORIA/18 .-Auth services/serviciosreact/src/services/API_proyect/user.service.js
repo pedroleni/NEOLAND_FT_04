@@ -29,10 +29,29 @@ export const loginUser = async (formData) => {
     });
 };
 
+//! -------------------------AUTOLOGIN ---------------------------------------
+export const autoLoginUser = async (formData) => {
+  return API.post("/users/login/autologin", formData)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
 //!  ----------------------forgot password ---------------------------------
 
 export const forgotPasswordUser = async (formData) => {
   return API.patch("/users/forgotpassword", formData)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+//! ----------------------- RESED CODE CONFIRMATION ------------------------------
+
+export const resendCodeConfirmationUser = async (formData) => {
+  return API.post("/users/resend", formData)
     .then((res) => res)
     .catch((error) => {
       return error;

@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { useEffect } from "react";
 
-const ProtectedCheck = ({ children }) => {
+const ProtectedCheckChildren = ({ children }) => {
   //allUser.data.user.check = true
 
   // user.check = true
@@ -26,10 +26,10 @@ const ProtectedCheck = ({ children }) => {
   }, [allUser]);
 
   if (allUser?.data?.user?.check == true || user?.check == true) {
-    return children;
+    return <Navigate to="/dashboard" />;
   } else {
-    return <Navigate to="/verifyCode" />;
+    return children;
   }
 };
 
-export default ProtectedCheck;
+export default ProtectedCheckChildren;

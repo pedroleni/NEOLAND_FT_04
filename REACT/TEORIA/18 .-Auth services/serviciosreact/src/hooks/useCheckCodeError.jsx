@@ -16,6 +16,7 @@ const useCheckCodeError = (res, setDeleteUser, setOkCheck) => {
   //! -------200:  ok delete user
   if (res?.data?.delete?.includes("ok delete user")) {
     setDeleteUser(() => true);
+
     Swal.fire({
       icon: "error",
       title: "No correct Code ❎.",

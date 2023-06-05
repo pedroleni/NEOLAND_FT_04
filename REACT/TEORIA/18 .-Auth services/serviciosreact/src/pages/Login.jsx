@@ -28,7 +28,11 @@ const Login = () => {
   //! ---------- LOS CONDICIONALES QUE GESTIONAN LOS ESTADOS DE NAVEGACION--------------
 
   if (loginOk) {
-    return <Navigate to="/dashboard" />;
+    if (res.data.user.check == false) {
+      return <Navigate to="/verifyCode" />;
+    } else {
+      return <Navigate to="/dashboard" />;
+    }
   }
   return (
     <>
