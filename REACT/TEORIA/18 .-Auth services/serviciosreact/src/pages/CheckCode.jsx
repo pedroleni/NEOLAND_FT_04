@@ -88,9 +88,13 @@ const CheckCode = () => {
         check: true,
       };
       const customUserString = JSON.stringify(customUser);
-      userlogin(customUserString);
-      // setUser(customUser);
-      // localStorage.setItem("user", customUserString);
+
+      //! No utilzamos directamente el userLogin porque ya estamos logados solo tenemos...ç
+      //! que actualizar el localstorage y el user el contesto para que la nav se renderice correctamente
+
+      //userlogin(customUserString);
+      setUser(customUser);
+      localStorage.setItem("user", customUserString);
 
       return <Navigate to="/dashboard" />;
     }
