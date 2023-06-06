@@ -12,7 +12,7 @@ import useAutoLogin from "../hooks/useAutoLogin";
 import useResendCodeError from "../hooks/useResendCodeError";
 
 const CheckCode = () => {
-  const { allUser, userlogin } = useAuth();
+  const { allUser, userlogin, setUser } = useAuth();
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [resResend, setResResend] = useState({});
@@ -66,11 +66,6 @@ const CheckCode = () => {
   useEffect(() => {
     useCheckCodeError(res, setDeleteUser, setOkCheck);
   }, [res]);
-  useEffect(() => {
-    return () => {
-      console.log("me desmonto");
-    };
-  }, []);
 
   useEffect(() => {
     console.log(resResend);
@@ -84,7 +79,7 @@ const CheckCode = () => {
   }
   if (okCheck) {
     if (!localStorage.getItem("user")) {
-      useAutoLogin();
+      useAutoLogin(allUser, userlogin);
     } else {
       const currentUser = localStorage.getItem("user");
       const parseCurrentUser = JSON.parse(currentUser);
@@ -94,6 +89,8 @@ const CheckCode = () => {
       };
       const customUserString = JSON.stringify(customUser);
       userlogin(customUserString);
+      // setUser(customUser);
+      // localStorage.setItem("user", customUserString);
 
       return <Navigate to="/dashboard" />;
     }
