@@ -14,7 +14,8 @@ import { AuthContextProvider } from "./contexts/authContext.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ProtectedCheck from "./components/ProtectedCheck.jsx";
 import ProtectedCheckChildren from "./components/ProtectedCheckChildren.jsx";
-ProtectedCheckChildren;
+import Profile from "./pages/Profile.jsx";
+import { ProtectedGeneral } from "./components/ProtectedGeneral.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter basename="/">
@@ -25,6 +26,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route
+              path="/profile"
+              element={
+                <Protected>
+                  <Profile />
+                </Protected>
+              }
+            />
             <Route
               path="/verifyCode"
               element={
@@ -39,13 +48,15 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route
               path="/dashboard"
               element={
-                <Protected>
+                <ProtectedGeneral>
                   <ProtectedCheck>
                     <Dashboard />
                   </ProtectedCheck>
-                </Protected>
+                </ProtectedGeneral>
               }
             />
+
+            <Route path="/dashboardN" element={<Dashboard />} />
           </Route>
         </Routes>
       </AuthContextProvider>

@@ -32,7 +32,7 @@ const Header = () => {
             </NavLink>
           )}
 
-          {user !== null && (
+          {user !== null && user?.check == true ? (
             <NavLink to="/dashboard">
               <img
                 src="https://res.cloudinary.com/dq186ej4c/image/upload/v1685705689/dashboard-statistics-5492_rnmxcl.png"
@@ -40,7 +40,7 @@ const Header = () => {
                 className="iconNav iconDashBoard"
               />
             </NavLink>
-          )}
+          ) : null}
 
           <NavLink to="/">
             <img
@@ -59,11 +59,17 @@ const Header = () => {
             />
           )}
 
-          {user !== null && (
-            <NavLink to="/profile">
-              <img className="profileCircle" src={user.image} alt={user.user} />
-            </NavLink>
-          )}
+          {user !== null && user?.check == true ? (
+            <>
+              <NavLink to="/profile">
+                <img
+                  className="profileCircle"
+                  src={user.image}
+                  alt={user.user}
+                />
+              </NavLink>
+            </>
+          ) : null}
         </nav>
       </header>
       <div className="whiteContainer"></div>

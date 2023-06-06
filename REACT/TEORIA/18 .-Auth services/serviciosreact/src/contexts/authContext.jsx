@@ -1,8 +1,10 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  const navigate = useNavigate();
   //! -----> TENEMOS UN ESTADO DEL USUARIO EN GENERAL ---------------------------
   const [user, setUser] = useState(() => {
     const data = localStorage.getItem("user");
@@ -17,13 +19,19 @@ export const AuthContextProvider = ({ children }) => {
 
   //! -------> ESTE ESTADO SIRVE SOLO PARA EL REGISTER PARA SETEAR LA RESPUESTA--------
   //! ----------------Puede utlizarase como estado de transicion( estado que nos sirve para guardar respuestas)
-  const [allUser, setAllUser] = useState({});
+  const [allUser, setAllUser] = useState({
+    data: {
+      user: {
+        password: "",
+        email: "",
+      },
+    },
+  });
 
   //! --------> FUNCION PUENTE PARA SETEAR ESTADOS EN CASO DE TENER PROBLEMAS CON LA ASINCRONIA DE REACT----
   const bridgeData = (state) => {
     const data = localStorage.getItem("data");
     const dataJson = JSON.parse(data);
-    console.log(dataJson);
     switch (state) {
       case "ALLUSER":
         setAllUser(dataJson);
@@ -50,6 +58,7 @@ export const AuthContextProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("user");
     setUser(null);
+    navigate("/login");
   };
 
   const value = useMemo(

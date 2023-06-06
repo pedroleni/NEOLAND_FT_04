@@ -22,6 +22,7 @@ const Login = () => {
 
   //! ---------USEffect ASOCIADO A LA RES PARA GESTIONAR LOS ERRORES----------------
   useEffect(() => {
+    console.log(res);
     useLoginError(res, setLoginOk, userlogin);
   }, [res]);
 
