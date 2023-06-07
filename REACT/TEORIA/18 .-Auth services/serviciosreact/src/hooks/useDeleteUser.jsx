@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import { deleteUser } from "../services/API_proyect/user.service";
+import { useNavigate } from "react-router-dom";
 
 const useDeleteUser = (setUser) => {
   Swal.fire({
@@ -24,7 +25,6 @@ const useDeleteUser = (setUser) => {
           setUser(() => null);
           localStorage.removeItem("user");
 
-          navigate("/register");
           break;
 
         default:
