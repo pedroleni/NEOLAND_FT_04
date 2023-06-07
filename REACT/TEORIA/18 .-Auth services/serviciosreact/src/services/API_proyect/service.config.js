@@ -1,13 +1,11 @@
 import axios from "axios";
-
-const userLocal = localStorage.getItem("user");
-const parseUser = JSON.parse(userLocal);
+import { updateToken } from "../../util/updateToken";
 
 const APIHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
-  Authorization: `Bearer ${parseUser?.token}`,
+  Authorization: `Bearer ${updateToken()}`,
 };
 
 export const API = axios.create({

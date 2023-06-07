@@ -1,3 +1,4 @@
+import { updateToken } from "../../util/updateToken";
 import { API } from "./service.config";
 
 export const registerUser = async (formData) => {
@@ -52,6 +53,43 @@ export const forgotPasswordUser = async (formData) => {
 
 export const resendCodeConfirmationUser = async (formData) => {
   return API.post("/users/resend", formData)
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+//! ---------------------- CHANGE PASSWORD ---- ESTAMOS LOGADOS---------------------
+export const changePasswordUser = async (formData) => {
+  return API.patch("/users/changepassword", formData, {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+//! ------------------------- DELETE USER ---------------------------------------------
+
+export const deleteUser = async () => {
+  return API.delete("/users/", {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+    },
+  })
+    .then((res) => res)
+    .catch((error) => {
+      return error;
+    });
+};
+
+//! -------------------------UPDATE USER ----------------------------------------------
+
+export const updateUser = async (formData) => {
+  return API.patch("/users/update/update", formData)
     .then((res) => res)
     .catch((error) => {
       return error;
