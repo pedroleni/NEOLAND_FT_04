@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Header.css";
 import { useAuth } from "../contexts/authContext";
-import { useEffect } from "react";
 
 const Header = () => {
   const { user, logout } = useAuth();

@@ -25,6 +25,12 @@
   }
 }
 
+@media (max-width: 700px) {
+  .containerProfile {
+    width: 90vw;
+  }
+}
+
 @media (max-width: 400px) {
   .formProfile {
     margin: 0.5rem;
