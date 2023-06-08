@@ -5,14 +5,15 @@ import { useAuth } from "../contexts/authContext";
 import FigureUser from "./FigureUser";
 import "./FormProfile.css";
 import Uploadfile from "./Uploadfile";
+import { updateUser } from "../services/API_proyect/user.service";
+import useUpdateError from "../hooks/useUpdateError";
 
 const FormProfile = () => {
   const { setUser, user } = useAuth();
-  const inputRef = useRef(null);
   const { register, handleSubmit } = useForm();
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
-  const [changeProfileOk, setChangeProfileOk] = useState(false);
+  const [changeProfileDataOk, setChangeProfileDataOk] = useState(false);
   const defaultData = {
     name: user?.user,
   };
@@ -27,28 +28,34 @@ const FormProfile = () => {
       confirmButtonText: "YES",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        setSend(true);
-        console.log(formData);
-        //setRes(await changePasswordUser({ password, newPassword }));
-        setSend(false);
+        const inputfile = document.getElementById("file-upload").files;
+        let customFormData;
+
+        if (inputfile.length !== 0) {
+          customFormData = { ...formData, image: inputfile[0] };
+          setSend(true);
+          setRes(await updateUser(customFormData));
+          setSend(false);
+        } else {
+          customFormData = { ...formData };
+          setSend(true);
+          setRes(await updateUser(customFormData));
+          setSend(false);
+        }
       }
     });
   };
 
   //! --------------- USEEFFECT  que controla la gestion de errores ----------------------
   useEffect(() => {
-    console.log(res);
+    useUpdateError(res, setChangeProfileDataOk);
   }, [res]);
-
-  useEffect(() => {
-    console.log(inputRef);
-  }, [inputRef]);
 
   //! ---------------- LOS CONDICIONALES CON LOS ESTADOS DE NAVEGACION --------------------
 
-  if (changeProfileOk) {
+  if (changeProfileDataOk) {
     //! no utilizamos el logout aunque no pasaria nada. No lo utlizo porque da warning
-    setUser(null);
+    setUser(() => null);
     localStorage.removeItem("user");
   }
   return (

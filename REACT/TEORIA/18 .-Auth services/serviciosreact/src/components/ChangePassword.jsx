@@ -50,7 +50,7 @@ const ChangePassword = () => {
   if (changePasswordOk) {
     //! no utilizamos el logout aunque no pasaria nada. No lo utlizo porque da warning
     //logout();
-    setUser(null);
+    setUser(() => null);
     localStorage.removeItem("user");
     return <Navigate to="/login" />;
   }

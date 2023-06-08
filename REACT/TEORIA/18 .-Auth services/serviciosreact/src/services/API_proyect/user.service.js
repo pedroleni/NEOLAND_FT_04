@@ -89,7 +89,12 @@ export const deleteUser = async () => {
 //! -------------------------UPDATE USER ----------------------------------------------
 
 export const updateUser = async (formData) => {
-  return API.patch("/users/update/update", formData)
+  return API.patch("/users/update/update", formData, {
+    headers: {
+      Authorization: `Bearer ${updateToken()}`,
+      "Content-Type": "multipart/form-data",
+    },
+  })
     .then((res) => res)
     .catch((error) => {
       return error;
