@@ -6,7 +6,6 @@ const useUpdateError = (res, setChangeProfileDataOk) => {
   if (res?.data) {
     contador = 0;
     res?.data?.testUpdate?.map((item) => {
-      console.log("entro");
       for (let clave in item) {
         if (item[clave] == false) {
           contador++;

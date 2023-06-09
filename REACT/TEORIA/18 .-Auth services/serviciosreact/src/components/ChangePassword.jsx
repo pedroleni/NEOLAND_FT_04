@@ -41,17 +41,17 @@ const ChangePassword = () => {
   };
   //! --------------- USEEFFECT  que controla la gestion de errores ----------------------
   useEffect(() => {
-    console.log(res);
-    useChangePasswordError(res, setChangePasswordOk);
+    useChangePasswordError(res, setChangePasswordOk, setUser);
   }, [res]);
 
   //! ---------------- LOS CONDICIONALES CON LOS ESTADOS DE NAVEGACION --------------------
 
   if (changePasswordOk) {
     //! no utilizamos el logout aunque no pasaria nada. No lo utlizo porque da warning
+    //! el setUser y el borrado del localStorage lo hacemos mejor en el useError correspondiente de la pagina
     //logout();
-    setUser(() => null);
-    localStorage.removeItem("user");
+    //setUser(() => null);
+    //localStorage.removeItem("user");
     return <Navigate to="/login" />;
   }
   return (

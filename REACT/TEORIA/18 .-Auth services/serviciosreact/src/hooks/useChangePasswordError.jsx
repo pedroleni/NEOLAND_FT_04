@@ -1,8 +1,10 @@
 import Swal from "sweetalert2";
 
-const useChangePasswordError = (res, setChangePasswordOk) => {
+const useChangePasswordError = (res, setChangePasswordOk, setUser) => {
   //!  --------- 200: {updateUser: true}
   if (res?.data?.updateUser?.toString() == "true") {
+    setUser(() => null);
+    localStorage.removeItem("user");
     setChangePasswordOk(() => true);
     Swal.fire({
       icon: "success",

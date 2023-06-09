@@ -7,8 +7,7 @@ import { useAuth } from "../contexts/authContext";
 
 const Profile = () => {
   const [changeRender, setChangeRender] = useState(true);
-  const { user, setUser } = useAuth();
-  console.log(user);
+  const { setUser } = useAuth();
 
   return (
     <>
