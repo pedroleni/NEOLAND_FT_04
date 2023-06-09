@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const useCheckCodeError = (res, setDeleteUser, setOkCheck) => {
+const useCheckCodeError = (res, setDeleteUser, setOkCheck, setUser) => {
   // -------404 o un 500  en este caso --------->res.response
   // -------200 ---> entramos directos a la ---->res.data
   //! -------status: 500
@@ -38,6 +38,22 @@ const useCheckCodeError = (res, setDeleteUser, setOkCheck) => {
   }
   //! ------200: testCheckOk:
   if (res?.data?.testCheckOk?.toString() == "true") {
+    if (localStorage.getItem("user")) {
+      const currentUser = localStorage.getItem("user");
+      const parseCurrentUser = JSON.parse(currentUser);
+      const customUser = {
+        ...parseCurrentUser,
+        check: true,
+      };
+      const customUserString = JSON.stringify(customUser);
+
+      //! No utilzamos directamente el userLogin porque ya estamos logados solo tenemos...ç
+      //! que actualizar el localstorage y el user el contesto para que la nav se renderice correctamente
+
+      //userlogin(customUserString);
+      setUser(() => customUser);
+      localStorage.setItem("user", customUserString);
+    }
     setOkCheck(() => true);
     Swal.fire({
       icon: "success",

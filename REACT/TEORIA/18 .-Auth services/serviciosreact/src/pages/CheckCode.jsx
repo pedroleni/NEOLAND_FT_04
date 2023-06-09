@@ -63,7 +63,7 @@ const CheckCode = () => {
 
   //! --------USE EFFECT QUE NOSC SIRVE CUANDO CAMBIA RES A LANZAR EL COMPROBADOR DE ERRORES
   useEffect(() => {
-    useCheckCodeError(res, setDeleteUser, setOkCheck);
+    useCheckCodeError(res, setDeleteUser, setOkCheck, setUser);
   }, [res]);
 
   useEffect(() => {
@@ -79,21 +79,6 @@ const CheckCode = () => {
     if (!localStorage.getItem("user")) {
       useAutoLogin(allUser, userlogin);
     } else {
-      const currentUser = localStorage.getItem("user");
-      const parseCurrentUser = JSON.parse(currentUser);
-      const customUser = {
-        ...parseCurrentUser,
-        check: true,
-      };
-      const customUserString = JSON.stringify(customUser);
-
-      //! No utilzamos directamente el userLogin porque ya estamos logados solo tenemos...ç
-      //! que actualizar el localstorage y el user el contesto para que la nav se renderice correctamente
-
-      //userlogin(customUserString);
-      setUser(() => customUser);
-      localStorage.setItem("user", customUserString);
-
       return <Navigate to="/dashboard" />;
     }
   }
