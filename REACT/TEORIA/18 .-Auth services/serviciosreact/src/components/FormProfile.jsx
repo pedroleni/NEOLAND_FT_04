@@ -48,15 +48,14 @@ const FormProfile = () => {
 
   //! --------------- USEEFFECT  que controla la gestion de errores ----------------------
   useEffect(() => {
-    useUpdateError(res, setChangeProfileDataOk);
+    useUpdateError(res, setChangeProfileDataOk, setUser);
   }, [res]);
 
   //! ---------------- LOS CONDICIONALES CON LOS ESTADOS DE NAVEGACION --------------------
 
   if (changeProfileDataOk) {
     //! no utilizamos el logout aunque no pasaria nada. No lo utlizo porque da warning
-    setUser(() => null);
-    localStorage.removeItem("user");
+    return <Navigate to="login" />;
   }
   return (
     <>

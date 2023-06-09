@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const useUpdateError = (res, setChangeProfileDataOk) => {
+const useUpdateError = (res, setChangeProfileDataOk, setUser) => {
   let contador;
   //! if para comprobar con un contador que no tenemos nada en false es decir no se ha actualizado
   if (res?.data) {
@@ -24,6 +24,8 @@ const useUpdateError = (res, setChangeProfileDataOk) => {
         }
       }
     });
+    setUser(() => null);
+    localStorage.removeItem("user");
     setChangeProfileDataOk(() => true);
     Swal.fire({
       icon: "success",
