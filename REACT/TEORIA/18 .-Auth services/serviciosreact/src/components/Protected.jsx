@@ -7,7 +7,8 @@ export const Protected = ({ children }) => {
   const { user, logout } = useAuth();
 
   if (user == null || user?.check == false) {
-    logout();
+    localStorage.removeItem("user");
+    return <Navigate to="/login" />;
   }
 
   return children;

@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const useCheckCodeError = (res, setDeleteUser, setOkCheck, setUser) => {
   // -------404 o un 500  en este caso --------->res.response

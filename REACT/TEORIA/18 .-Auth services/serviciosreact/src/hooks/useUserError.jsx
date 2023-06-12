@@ -1,5 +1,5 @@
 import { Navigate, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 const useUserError = (res, setRegisterOk) => {
   //! 200 --->  respuesta ok register ok

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { changePasswordUser } from "../services/API_proyect/user.service";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import useChangePasswordError from "../hooks/useChangePasswordError";
 import { useAuth } from "../contexts/authContext";
 import { Navigate } from "react-router-dom";

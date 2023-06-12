@@ -1,4 +1,4 @@
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { deleteUser } from "../services/API_proyect/user.service";
 
 const useDeleteUser = (setUser) => {

@@ -1,5 +1,4 @@
-import Swal from "sweetalert2";
-
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 const useLoginError = (res, setLoginOk, userlogin) => {
   // -------404 o un 500  en este caso --------->res.response
   // -------200 ---> entramos directos a la ---->res.data

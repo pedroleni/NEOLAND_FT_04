@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
+import Swal from "sweetalert2/dist/sweetalert2.all.js";
 import { useAuth } from "../contexts/authContext";
 import FigureUser from "./FigureUser";
 import "./FormProfile.css";

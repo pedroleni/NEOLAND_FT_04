@@ -11,7 +11,7 @@ const Login = () => {
   const [res, setRes] = useState({});
   const [send, setSend] = useState(false);
   const [loginOk, setLoginOk] = useState(false);
-  const { userlogin } = useAuth();
+  const { userlogin, setUser } = useAuth();
 
   //! ---------- FUNCION QUE GESTIONA LA DATA DEL FORMULARIO-----------------------
   const formSubmit = async (formData) => {
@@ -24,6 +24,10 @@ const Login = () => {
   useEffect(() => {
     useLoginError(res, setLoginOk, userlogin);
   }, [res]);
+
+  useEffect(() => {
+    setUser(() => null);
+  }, []);
 
   //! ---------- LOS CONDICIONALES QUE GESTIONAN LOS ESTADOS DE NAVEGACION--------------
 
