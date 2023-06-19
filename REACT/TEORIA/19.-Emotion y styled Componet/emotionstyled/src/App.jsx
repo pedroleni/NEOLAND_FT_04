@@ -9,6 +9,7 @@ import ButtonStyle from "./components/ButtonStyle/ButtonStyle";
 import { useThemeApp } from "./context/themeContext";
 import { H1C } from "./components/ui/h1.element";
 import Button from "./components/ui/Button";
+import { ButtonNuevaForma } from "./components/ui/Prueba.element";
 
 function App() {
   const { theme, toggleTheme } = useThemeApp();
@@ -34,7 +35,7 @@ function App() {
         <H1C text="esto es un h1 custom" width="largo" />
       </figure> */}
 
-      <Button text="Register" action={() => console.log("Hola")} />
+      {/* <Button text="Register" action={() => console.log("Hola")} />
       <Button
         text="Login"
         action={() => console.log("Login")}
@@ -45,7 +46,11 @@ function App() {
         action={() => console.log("Text")}
         variant="text"
         color="crimson"
-      />
+      /> */}
+
+      <ButtonNuevaForma width="largue" primary>
+        Esto es un botton
+      </ButtonNuevaForma>
     </ThemeProvider>
   );
 }
